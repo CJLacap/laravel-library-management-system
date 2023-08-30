@@ -2,6 +2,16 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    @if(session('expired'))
+     <p class="font-medium text-sm text-red-600 dark:text-red-400">{!! session('expired') !!}</p>
+    @endif
+    @if(session()->has('message'))
+    <div class=" text-red-600">
+     {{ session()->get('message') }}
+    </div>
+    @endif
+    
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
