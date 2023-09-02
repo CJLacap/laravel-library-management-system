@@ -35,7 +35,21 @@ Route::middleware(['auth','role:admin'])->group(function(){
 
     
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+
     Route::get('/admin/librarian', [AdminController::class, 'librarianAccounts'])->name('librarian.accounts');
+    Route::get('/admin/librarian/create', [AdminController::class, 'createLibrarian'])->name('librarian.create');
+    Route::post('/admin/librarian/create', [AdminController::class, 'storeLibrarian'])->name('librarian.store');
+    Route::get('/admin/librarian/{librarian}', [AdminController::class, 'editLibrarian'])->name('librarian.edit');
+    Route::patch('/admin/librarian/{librarian}', [AdminController::class, 'updateLibrarian'])->name('librarian.update');
+    Route::delete('/admin/librarian/{librarian}', [AdminController::class, 'destroyLibrarian'])->name('librarian.destroy');
+
+  
+    Route::patch('/user/{user}', [AdminController::class, 'updateUser'])->name('user.update');
+    Route::delete('/user{user}', [AdminController::class, 'destroyUser'])->name('user.destroy');
+
+
+    
+
 
 }); // End Group Admin Middleware
 
@@ -51,6 +65,13 @@ Route::middleware(['auth','role:librarian','status', 'verified'])->group(functio
 
 
 Route::middleware(['auth','role:admin,librarian'])->group(function(){
+
+    Route::get('/user', [AdminController::class, 'userAccounts'])->name('user.accounts');
+    Route::get('/user/create', [AdminController::class, 'createUser'])->name('user.create');
+    Route::post('/user/create', [AdminController::class, 'storeUser'])->name('user.store');
+    Route::get('/user/{user}', [AdminController::class, 'editUser'])->name('user.edit');
+    
+    
     
   
    
