@@ -47,11 +47,9 @@ class AdminController extends Controller
             return view('admin.librarian-accounts', compact('librarians'));
           
         }else{
-            return  redirect(route('librarian.accounts'))->with('message','No Librarian Found');
+            return Redirect::route('librarian.accounts')->with('message','No Librarian Found');
         } 
     }
-
-   
 
     /**
      * Display Librarian Create Page
@@ -76,9 +74,8 @@ class AdminController extends Controller
 
         ]);
 
-        return redirect(route('librarian.create'))->with('status', 'librarian-created');
+        return  Redirect::route('librarian.create')->with('status', 'librarian-created');
     }
-
 
     /**
      * Display the selected librarian Account Information to Edit
@@ -139,7 +136,7 @@ class AdminController extends Controller
             return view('admin.user-accounts', compact('users'));
           
         }else{
-            return  redirect(route('user.accounts'))->with('message','No User Found');
+            return  Redirect::route('user.accounts')->with('message','No User Found');
         } 
 
 
@@ -168,7 +165,7 @@ class AdminController extends Controller
 
         ]);
 
-        return redirect(route('user.create'))->with('status', 'user-created');
+        return  Redirect::route('user.create')->with('status', 'user-created');
     }
 
     /**

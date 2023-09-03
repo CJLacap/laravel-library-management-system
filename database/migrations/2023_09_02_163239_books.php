@@ -12,15 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
+            $table->id();
             $table->string('cover')->nullable();
             $table->string('title');
-            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreignId('author_id')->references('id')->on('authors');
             $table->string('isbn');
-            $table->foreign('publisher_id')->references('id')->on('publishers');
+            $table->foreignId('publisher_id')->references('id')->on('publishers');
             $table->string('publication_year')->nullable();
             $table->integer('copies')->nullable()->default(1);
             $table->enum('status',['available','unavailable','borrowed','out of order'])->default('available');
             $table->timestamps();
+        });
+
+        Schema::table('books', function(Blueprint $table) {
+            
+           
         });
     }
 

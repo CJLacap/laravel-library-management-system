@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -70,7 +71,11 @@ Route::middleware(['auth','role:admin,librarian'])->group(function(){
     Route::get('/user/create', [AdminController::class, 'createUser'])->name('user.create');
     Route::post('/user/create', [AdminController::class, 'storeUser'])->name('user.store');
     Route::get('/user/{user}', [AdminController::class, 'editUser'])->name('user.edit');
-    
+
+
+    Route::get('/book', [BookController::class, 'index'])->name('book.index');
+    Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
+    Route::post('/book/create', [BookController::class, 'store'])->name('book.store');
     
     
   
