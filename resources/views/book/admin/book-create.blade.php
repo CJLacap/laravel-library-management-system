@@ -43,8 +43,9 @@
                                 <x-input-label for="author" :value="__('Book Author')" />
                                 <x-text-input id="author" name="author" type="text" list="authors" class="mt-1 block w-full" :value="old('author')" required autofocus autocomplete="author" />
                                 <datalist id="authors">
-                                    <option value="Author1"> 
-                                    <option value="dsadad"> 
+                                    @foreach ($authors as $author )
+                                        <option value="{{ $author->name}}">
+                                    @endforeach
                                 </datalist>
                                 <x-input-error class="mt-2" :messages="$errors->get('author')" />
                             </div>
@@ -59,7 +60,12 @@
                             <!-- Book Publisher -->
                             <div>
                                 <x-input-label for="publisher" :value="__('Book Publisher')" />
-                                <x-text-input id="publisher" name="publisher" type="text" class="mt-1 block w-full" :value="old('publisher')" required autofocus autocomplete="publisher" />
+                                <x-text-input id="publisher" name="publisher" type="text" list="publishers" class="mt-1 block w-full" :value="old('publisher')" required autofocus autocomplete="publisher" />
+                                <datalist id="publishers">
+                                    @foreach ($publishers as $publisher )
+                                        <option value="{{ $publisher->name}}">
+                                    @endforeach
+                                </datalist>
                                 <x-input-error class="mt-2" :messages="$errors->get('publisher')" />
                             </div>
     
@@ -70,8 +76,8 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('publication_year')" />
                             </div>
     
-                              <!-- Book Category -->
-                              <div>
+                            {{-- <!-- Book Category -->
+                            <div>
                                 <x-input-label for="category" :value="__('Book Category')" />
                                 <x-text-input id="isbn" name="category" type="text" list="categories" class="mt-1 block w-full" :value="old('category')" required autofocus autocomplete="category" />
                                 <datalist id="categories">
@@ -79,7 +85,7 @@
                                     <option value="2">
                                 </datalist>
                                 <x-input-error class="mt-2" :messages="$errors->get('category')" />
-                            </div>
+                            </div> --}}
     
                             <!-- Book Copies -->
                             <div>
@@ -88,30 +94,6 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('copies')" />
                             </div>
                             
-                            <header>
-                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Book Location') }}
-                                </h2>
-                        
-                            </header>
-    
-                              <!-- Book floor -->
-                              <div>
-                                <x-input-label for="floor" :value="__('Floor Number')" />
-                                <x-text-input id="floor" name="floor" type="text" class="mt-1 block w-full" :value="old('floor')"  autofocus autocomplete="floor" />
-                                <x-input-error class="mt-2" :messages="$errors->get('floor')" />
-                            </div>
-    
-                              <!-- Book Floor -->
-                              <div>
-                                <x-input-label for="shelf" :value="__('Book Shelf Number')" />
-                                <x-text-input id="shelf" name="shelf" type="text" class="mt-1 block w-full" :value="old('shelf')"  autofocus autocomplete="shelf" />
-                                <x-input-error class="mt-2" :messages="$errors->get('shelf')" />
-                            </div>
-        
-    
-                          
-                    
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Create') }}</x-primary-button>
                     

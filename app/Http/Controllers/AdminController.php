@@ -23,32 +23,41 @@ class AdminController extends Controller
 
 
     /**
-     * Display All Librarian Accounts 
+     * Display All Librarian Accounts & Search Result 
      */
     public function librarianAccounts(Request $request){
 
-        // $librarians = DB::table('users')->where('role', 'librarian')->orderBy('first_name', 'asc')->paginate(10);
-        // return view('admin.librarian-accounts',compact('librarians'));
+        $librarians = User::where('role', '=', 'librarian')->orderBy('first_name', 'asc')->paginate(10);
 
-        $librarians = User::where([
-            ['role', '=', 'librarian'],
-            [function ($query) use ($request){
-                if(($librarian = $request->librarian)){
-                    $query->where('first_name','LIKE','%'. $librarian.'%')
-                        ->orWhere('last_name','LIKE','%'. $librarian.'%')
-                        ->orWhere('email','LIKE','%'. $librarian.'%')
-                        ->orWhere('phone','LIKE','%'. $librarian.'%')
-                        ->orWhere('address','LIKE','%'. $librarian.'%')->get();                                     
-                }
+        if($search = $request->librarian){
+            $role = 'librarian';
+            $librarians = $this->searchUser($search, $role);
+            if(count($librarians) == 0){
+              return Redirect::route('librarian.accounts')->with('message','No Librarian Found');
+            }
+          }
+
+        return view('admin.librarian-accounts', compact('librarians'));
+
+       
+    }
+
+    /**
+     * Search User
+     */
+    public function searchUser($search, $role){
+
+        return User::where([
+            ['role', '=', $role],
+            [function ($query) use ($search){
+                $query->where('first_name','LIKE','%'. $search.'%')
+                ->orWhere('last_name','LIKE','%'. $search.'%')
+                ->orWhere('email','LIKE','%'. $search.'%')
+                ->orWhere('phone','LIKE','%'. $search.'%')
+                ->orWhere('address','LIKE','%'. $search.'%');                                  
             }]
-        ])->orderBy('first_name', 'asc')->paginate(10);      
+        ])->paginate(10);
 
-        if(count($librarians)){
-            return view('admin.librarian-accounts', compact('librarians'));
-          
-        }else{
-            return Redirect::route('librarian.accounts')->with('message','No Librarian Found');
-        } 
     }
 
     /**
@@ -116,29 +125,17 @@ class AdminController extends Controller
      */
     public function userAccounts(Request $request){
 
-        // $users = DB::table('users')->where('role', 'user')->orderBy('first_name', 'asc')->paginate(10);
-        // return view('admin.user-accounts',compact('users'));
+        $users = User::where('role', '=', 'user')->orderBy('first_name', 'asc')->paginate(10);
 
-        $users = User::where([
-            ['role', '=', 'user'],
-            [function ($query) use ($request){
-                if(($user = $request->user)){
-                    $query->where('first_name','LIKE','%'. $user.'%')
-                        ->orWhere('last_name','LIKE','%'. $user.'%')
-                        ->orWhere('email','LIKE','%'. $user.'%')
-                        ->orWhere('phone','LIKE','%'. $user.'%')
-                        ->orWhere('address','LIKE','%'. $user.'%')->get();                                     
-                }
-            }]
-        ])->orderBy('first_name', 'asc')->paginate(10);      
+        if($search = $request->user){
+            $role = 'user';
+            $users = $this->searchUser($search, $role);
+            if(count($users) == 0){
+              return Redirect::route('user.accounts')->with('message','No User Found');
+            }
+          }
 
-        if(count($users)){
-            return view('admin.user-accounts', compact('users'));
-          
-        }else{
-            return  Redirect::route('user.accounts')->with('message','No User Found');
-        } 
-
+        return view('admin.user-accounts', compact('users'));
 
     }
 
@@ -188,7 +185,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Deleting Librarian Account
+     * Deleting User Account
      */
     public function destroyUser(Request $request, User $user){
         
@@ -201,5 +198,6 @@ class AdminController extends Controller
         return Redirect::route('user.accounts');
 
     }
+
 
 }

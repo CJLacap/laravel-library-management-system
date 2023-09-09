@@ -25,7 +25,7 @@ class BookStoreRequest extends FormRequest
             'cover' => ['mimes:jpeg,bmp,png,jpg','max:1000'],
             'title' => ['required', 'string', 'max:255'],
             'author' =>  ['required', 'string', 'max:255'],
-            'isbn' =>  ['required', 'string', 'max:13'],
+            'isbn' =>  ['required', 'string', 'max:13', 'min:10'],
             'publisher' =>['string'],
             'publication_year',
             'copies',

@@ -6,4 +6,14 @@
     <x-nav-link :href="route('book.create')" :active="request()->routeIs('book.create')">
         {{ __('Add New Book') }}
     </x-nav-link>
+
+    <x-nav-link :href="route('book.authors')" :active="request()->routeIs('book.authors')">
+        {{ __('Authors') }}
+    </x-nav-link>
+    <x-nav-link :href="route('book.publishers')" :active="request()->routeIs('book.publishers')">
+        {{ __('Publishers') }}
+    </x-nav-link>
+    <x-nav-link :href="route('book.create')" :active="request()->routeIs('book.create')">
+        {{ __('Categories') }}
+    </x-nav-link>
 </h2>

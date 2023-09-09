@@ -81,13 +81,16 @@
                             <div>
                                 <x-input-label :value="__('Status')" class="mb-2" />
                                 <input type="radio" id="active" name="status" value="active"
-                                    {{ $user->status == 'active' ? 'checked' : '' }}> Active </label>
+                                    {{ $user->status == 'active' ? 'checked' : '' }}/> 
+                                    <label>Active</label>
 
                                 <input type="radio" id="inactive" name="status" value="inactive"
-                                    {{ $user->status == 'inactive' ? 'checked' : '' }}> Inactive</label>
+                                    {{ $user->status == 'inactive' ? 'checked' : '' }}/> 
+                                    <label>Inactive</label>
 
                                 <input type="radio" id="blocked" name="status" value="blocked"
-                                    {{ $user->status == 'blocked' ? 'checked' : '' }}> Blocked</label>
+                                    {{ $user->status == 'blocked' ? 'checked' : '' }}/>
+                                    <label>Blocked</label>
                             </div>
                             @if(Auth::user()->role === 'admin')
                             <div class="flex items-center gap-4">

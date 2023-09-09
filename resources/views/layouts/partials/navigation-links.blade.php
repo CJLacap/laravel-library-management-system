@@ -40,6 +40,8 @@
             {{ __('Books') }}
         </x-nav-link>
     </div>
+
+    
 @endif
 
 
