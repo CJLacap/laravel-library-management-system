@@ -28,6 +28,7 @@ class BookStoreRequest extends FormRequest
             'isbn' =>  ['required', 'string', 'max:13', 'min:10'],
             'publisher' =>['string'],
             'publication_year',
+            'category',
             'copies',
         ];
     }

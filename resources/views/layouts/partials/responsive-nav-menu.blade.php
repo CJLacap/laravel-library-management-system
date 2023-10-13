@@ -38,6 +38,18 @@
             {{ __('Books') }}
         </x-responsive-nav-link >
     </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link  :href="route('request.index')" :active="request()->routeIs('request.index')">
+            {{ __('Requests') }}
+        </x-responsive-nav-link >
+    </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link  :href="route('borrowed.index')" :active="request()->routeIs('borrowed.index')">
+            {{ __('Borrowed') }}
+        </x-responsive-nav-link >
+    </div>
 @endif
 
 @if(Auth::user()->role === 'user')

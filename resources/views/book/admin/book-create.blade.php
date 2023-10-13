@@ -76,21 +76,22 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('publication_year')" />
                             </div>
     
-                            {{-- <!-- Book Category -->
+                            <!-- Book Category -->
                             <div>
                                 <x-input-label for="category" :value="__('Book Category')" />
-                                <x-text-input id="isbn" name="category" type="text" list="categories" class="mt-1 block w-full" :value="old('category')" required autofocus autocomplete="category" />
+                                <x-text-input id="isbn" name="category" type="text" list="categories" class="mt-1 block w-full" :value="old('category')" autofocus autocomplete="category" />
                                 <datalist id="categories">
-                                    <option value="1">
-                                    <option value="2">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->name}}">
+                                    @endforeach
                                 </datalist>
                                 <x-input-error class="mt-2" :messages="$errors->get('category')" />
-                            </div> --}}
+                            </div> 
     
                             <!-- Book Copies -->
                             <div>
                                 <x-input-label for="copies" :value="__('Book Copies')" />
-                                <x-text-input id="copies" name="copies" type="text" class="mt-1 block w-full" :value="old('copies')" required autofocus autocomplete="copies" />
+                                <x-text-input id="copies" name="copies" type="text" class="mt-1 block w-full" :value="old('copies')" autofocus autocomplete="copies" />
                                 <x-input-error class="mt-2" :messages="$errors->get('copies')" />
                             </div>
                             

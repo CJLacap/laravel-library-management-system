@@ -80,13 +80,13 @@
                             <div>
                                 <x-input-label :value="__('Status')" />
                                 <input type="radio" id="active" name="status" value="active"
-                                    {{ $librarian->status == 'active' ? 'checked' : '' }}> Active </label>
+                                    {{ $librarian->status == 'active' ? 'checked' : '' }} @disabled(true)> Active </label>
 
                                 <input type="radio" id="inactive" name="status" value="inactive"
-                                    {{ $librarian->status == 'inactive' ? 'checked' : '' }}> Inactive</label>
+                                    {{ $librarian->status == 'inactive' ? 'checked' : '' }} @disabled(true)> Inactive</label>
 
                                 <input type="radio" id="blocked" name="status" value="blocked"
-                                    {{ $librarian->status == 'blocked' ? 'checked' : '' }}> Blocked</label>
+                                    {{ $librarian->status == 'blocked' ? 'checked' : '' }} @disabled(true)> Blocked</label>
                             </div>
 
                             <div class="flex items-center gap-4">
@@ -104,9 +104,10 @@
             @if(Auth::user()->role === 'admin')
             <div class="mt-4 p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
-                    @include('admin.partials.librarian.librarian-delete')
+                    @include('admin.partials.librarian.librarian-status')
                 </div>
             </div>
+
             <div class="mt-4 p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('admin.partials.librarian.librarian-delete')

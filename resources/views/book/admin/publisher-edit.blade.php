@@ -11,15 +11,15 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                {{ __('Author Details') }}
+                                {{ __('Publisher Details') }}
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                {{ __('Update Author details.') }}
+                                {{ __('Update Publisher details.') }}
                             </p>
                         </header>
 
-                        <form method="post" action="{{ route('publisher.edit', $publisher) }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+                        <form method="post" action="" class="mt-6 space-y-6" enctype="multipart/form-data">
                             @csrf
                             @method('patch')
 

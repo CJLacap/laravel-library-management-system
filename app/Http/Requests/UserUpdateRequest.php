@@ -27,9 +27,9 @@ class UserUpdateRequest extends FormRequest
             'first_name' => ['string', 'min:2'],
             'last_name' => ['string', 'min:2'],
             'email' => ['string', 'email', 'max:255',  Rule::unique(User::class)->ignore($this->user->id)],
-            'address' => ['string', 'max:500'],
-            'phone' => ['string', 'max:13'],
-            'status' => ['required'],
+            'address' => ['max:255'],
+            'phone' => ['max:13'],
+            'status',
         ];
     }
 }

@@ -13,7 +13,7 @@
     <x-nav-link :href="route('book.publishers')" :active="request()->routeIs('book.publishers')">
         {{ __('Publishers') }}
     </x-nav-link>
-    <x-nav-link :href="route('book.create')" :active="request()->routeIs('book.create')">
+    <x-nav-link :href="route('book.categories')" :active="request()->routeIs('book.categories')">
         {{ __('Categories') }}
     </x-nav-link>
 </h2>

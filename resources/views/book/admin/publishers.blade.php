@@ -72,10 +72,10 @@
                                                 {{ $publisher->books_count }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $publisher->created_at }}
+                                                {{ $publisher->created_at->format('Y-m-d') }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $publisher->updated_at }}
+                                                {{ $publisher->updated_at->format('Y-m-d') }}
                                             </td>
                                             <td class="py-2 px-3">
                                                 <a href="publishers/{{ $publisher->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">Edit</a>
@@ -84,9 +84,16 @@
                                                 <a href="publishers/{{ $publisher->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">view books</a>
                                             </td>
                                             @if($publisher->books_count == 0)
-                                            <td class="py-2 px-3">
-                                                <a href="publishers/{{ $publisher->id }}" class="bg-red-600 text-white px-4 py-2 rounded">Delete</a>
-                                            </td>
+                                            <form class="" method="POST" action="{{ route('publisher.destroy', $publisher) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <td class="py-2 px-3">
+                                                    <x-danger-button>
+                                                        {{ __('Delete') }}
+                                                    </x-danger-button>
+                                                </div>
+                                                </td>
+                                                </form>
                                             @endif
                                         </tr>
                                     @endforeach

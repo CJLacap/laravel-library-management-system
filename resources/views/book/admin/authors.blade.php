@@ -11,7 +11,7 @@
                     <h3>Search Author</h3>
                     <form method="get" action="" class="py-6">
                         @csrf
-                        @method('get') 
+                     
                         <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -72,23 +72,31 @@
                                                 {{ $author->books_count }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $author->created_at }}
+                                                {{ $author->created_at->format('Y-m-d') }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $author->updated_at }}
+                                                {{ $author->updated_at->format('Y-m-d') }}
                                             </td>
                                             <td class="py-2 px-3">
                                                 <a href="authors/{{ $author->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">Edit</a>
                                             </td>
                                             
                                             <td class="py-2 px-3">
-                                                <a href="authors/{{ $author->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">view book list</a>
+                                                <a href="authors/{{ $author->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">Books </a>
                                             </td>
                                             @if($author->books_count == 0)
+                                            <form class="" method="POST" action="{{ route('author.destroy', $author) }}">
+                                            @csrf
+                                            @method('delete')
                                             <td class="py-2 px-3">
-                                                <a href="authors/{{ $author->id }}" class="bg-red-600 text-white px-4 py-2 rounded">Delete</a>
+                                                <x-danger-button>
+                                                    {{ __('Delete') }}
+                                                </x-danger-button>
+                                            </div>
                                             </td>
+                                            </form>
                                             @endif
+
                                         </tr>
                                     @endforeach
                                 </tbody>

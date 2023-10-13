@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('isbn');
             $table->foreignId('publisher_id')->references('id')->on('publishers');
             $table->string('publication_year')->nullable();
-            $table->integer('copies')->nullable()->default(1);
+            $table->string('copies')->default(1);
             $table->enum('status',['available','unavailable','borrowed','out of order'])->default('available');
             $table->timestamps();
         });

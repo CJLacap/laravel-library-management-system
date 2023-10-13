@@ -54,7 +54,8 @@ class AdminController extends Controller
                 ->orWhere('last_name','LIKE','%'. $search.'%')
                 ->orWhere('email','LIKE','%'. $search.'%')
                 ->orWhere('phone','LIKE','%'. $search.'%')
-                ->orWhere('address','LIKE','%'. $search.'%');                                  
+                ->orWhere('address','LIKE','%'. $search.'%')
+                ->orWhere('status','LIKE','%'. $search.'%');                                   
             }]
         ])->paginate(10);
 
@@ -103,6 +104,20 @@ class AdminController extends Controller
 
         return Redirect::route('librarian.edit', $librarian)->with('status', 'librarian-updated');
 
+    }
+
+    /**
+     * Update Librarian Account Status
+     */
+    public function updateLibrarianStatus(LibrarianUpdateRequest $request, User $librarian){
+        
+        $request->validateWithBag('userStatus', [
+            'password' => ['required', 'current_password'],
+        ]);
+        
+        $librarian->update(['status' => $request->status]);
+
+        return Redirect::route('librarian.edit', $librarian)->with('status', 'user-status-updated');
     }
 
     /**
@@ -174,7 +189,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Updating Librarian Account Information
+     * Update User Account Information
      */
     public function updateUser(UserUpdateRequest $request, User $user){
         
@@ -183,9 +198,23 @@ class AdminController extends Controller
         return Redirect::route('user.edit', $user)->with('status', 'user-updated');
 
     }
+    
+    /**
+     * Update User Account Status
+     */
+    public function updateUserStatus(UserUpdateRequest $request, User $user){
+        
+        $request->validateWithBag('userStatus', [
+            'password' => ['required', 'current_password'],
+        ]);
+        
+        $user->update(['status' => $request->status]);
+
+        return Redirect::route('user.edit', $user)->with('status', 'user-status-updated');
+    }
 
     /**
-     * Deleting User Account
+     * Delete User Account
      */
     public function destroyUser(Request $request, User $user){
         
@@ -196,7 +225,6 @@ class AdminController extends Controller
         $user->delete();
 
         return Redirect::route('user.accounts');
-
     }
 
 

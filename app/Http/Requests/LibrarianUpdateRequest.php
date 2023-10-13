@@ -31,8 +31,7 @@ class LibrarianUpdateRequest extends FormRequest
             'email' => ['string', 'email', 'max:255',  Rule::unique(User::class)->ignore($this->librarian->id)],
             'address' => ['max:255'],
             'phone' => ['max:13'],
-            'status' => ['required'],
-
+            'status',
         ];
     }
 }

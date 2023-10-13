@@ -28,7 +28,9 @@ class BookUpdateRequest extends FormRequest
             'isbn' =>  ['string', 'max:13', 'min:10'],
             'publisher' =>['string'],
             'publication_year',
+            'category',
             'copies',
+            'status',
         ];
     }
 }
