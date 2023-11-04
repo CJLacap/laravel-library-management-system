@@ -6,6 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
+            @include('layouts.partials.message-status')
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <section>
@@ -32,12 +33,6 @@
                             </div>
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Update') }}</x-primary-button>
-
-                                @if (session('status') === 'author-updated')
-                                    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                                        class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ __('Author Updated Successfully.') }}</p>
-                                @endif
                             </div>
                         </form>
                     </section>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('publisher_id')->references('id')->on('publishers');
             $table->string('publication_year')->nullable();
             $table->string('copies')->default(1);
-            $table->enum('status',['available','unavailable','borrowed','out of order'])->default('available');
+            $table->enum('status',['available','unavailable','out of order'])->default('available');
             $table->timestamps();
         });
 

@@ -4,8 +4,9 @@
         @include('admin.partials.user.user-header')
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
+            <h3 class="text-white">Search User Accounts</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get') 
@@ -17,13 +18,8 @@
                             <input type="search" id="user" name="user" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search User Information" required>
                             <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                         </div>
-                        
-                        @if(session()->has('message'))
-                            <div class="mt-6 text-red-600">
-                             {{ session()->get('message') }}
-                            </div>
-                        @endif
                 </form>
+              @include('layouts.partials.message-status')  
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="max-w-10xl overflow-x-auto relative">
@@ -58,7 +54,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
-                                        <tr class="bg-gray-800 border-b text-white">
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
                                             <td class="py-4 px-6">
                                                 {{ $user->first_name }}
                                             </td>

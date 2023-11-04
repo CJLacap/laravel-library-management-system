@@ -6,6 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @include('layouts.partials.message-status')  
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 <section>
@@ -81,21 +82,9 @@
                             <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone')" />
                             <x-input-error class="mt-2" :messages="$errors->get('phone')" />
                         </div>
-
-                      
                 
                         <div class="flex items-center gap-4">
                             <x-primary-button>{{ __('Create') }}</x-primary-button>
-                
-                            @if (session('status') === 'user-created')
-                                <p
-                                    x-data="{ show: true }"
-                                    x-show="show"
-                                    x-transition
-                                    x-init="setTimeout(() => show = false, 2000)"
-                                    class="text-sm text-gray-600 dark:text-gray-400"
-                                >{{ __('New User Created Successfully.') }}</p>
-                            @endif
                         </div>
                     </form>
                 </section>

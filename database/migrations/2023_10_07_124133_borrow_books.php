@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('librarian_id')->nullable()->references('id')->on('users')->onUpdate('cascade');
             $table->enum('status',['borrowed','returned'])->default('borrowed');
-            $table->date('due_date');
+            $table->datetime('due_at');
+            $table->datetime('returned_at')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
         });

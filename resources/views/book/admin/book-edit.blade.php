@@ -6,6 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @include('layouts.partials.message-status')
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <section>
@@ -144,10 +145,8 @@
                                     {{ $book->status == 'available' ? 'checked' : '' }}> Available </label>
 
                                 <input type="radio" id="unavailable" name="status" value="unavailable"
-                                    {{ $book->status == 'unavailable' ? 'checked' : '' }}> Unavailable</label>
+                                    {{ $book->status == 'unavailable' ? 'checked' : '' }}> Unavailable/Out Of Order</label>
 
-                                <input type="radio" id="borrowed" name="status" value="borrowed" disabled
-                                    {{ $book->status == 'borrowed' ? 'checked' : '' }}> Borrowed</label>
                             </div>
 
                             <header>
@@ -181,17 +180,6 @@
 
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Update') }}</x-primary-button>
-
-                                @if (session('status') === 'book-updated')
-                                    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                                        class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ __('Book Updated Successfully.') }}</p>
-                                @endif
-                                @if (session('status') === 'book-cover-updated')
-                                    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                                        class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ __('Book Cover Updated Successfully.') }}</p>
-                                @endif
                             </div>
                         </form>
                     </section>
@@ -200,7 +188,22 @@
             @if(Auth::user()->role === 'admin')
             <div class="mt-4 p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
-                    @include('book.partials.book-delete')
+                    <section class="space-y-6">
+                        <header>
+                            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                {{ __('Delete Book') }}
+                            </h2>
+                    
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                {{ __('Once this book is deleted, all of its resources and data will be permanently deleted. Before deleting this book, please download any data or information that you wish to retain.') }}
+                            </p>
+                        </header>
+                            <x-danger-button
+                            x-data=""
+                            x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion-{{ $book->id }}')"
+                            >{{ __('Delete Book') }}</x-danger-button>
+                            @include('book.partials.book-delete')
+                    </section>
                 </div>
             </div>
             @endif

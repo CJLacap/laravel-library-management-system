@@ -21,10 +21,11 @@ class Book extends Model
     }
     
     public function bookCategories(): HasMany{
-
         return $this->hasMany(BookCategory::class);
     }
+    public function borrowBooks(): HasMany{
+        return $this->hasMany(BorrowBook::class)->where('status', 'borrowed');
+    }
 
-   
 
 }

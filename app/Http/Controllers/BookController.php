@@ -9,10 +9,12 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\BookCategory;
+use App\Models\User;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator; 
 
 class BookController extends Controller
 {
@@ -23,15 +25,16 @@ class BookController extends Controller
      * Display books and display search results
      */
     public function index(Request $request){
-
+        
+        $users = User::where('role', '=', 'user')->get();
         $books = Book::orderBy('title', 'asc')->paginate(10);
         if($search = $request->search){
           $books = $this->searchBook($search);
           if(count($books) == 0){
-            return Redirect::back()->with('message','No Book Found');
+            return Redirect::back()->with('statusError','No Book Found');
           }
         }
-        return view('book.admin.index',compact('books'));
+        return view('book.admin.index',compact('books', 'users'));
       
     }
 
@@ -96,7 +99,15 @@ class BookController extends Controller
             ]);
         }
 
-        return Redirect::back()->with('status', 'book-created');
+        return Redirect::back()->with('status', 'Book Info Stored Successfully');
+
+    }
+
+     /**
+     * Display selected book details and edit page
+     */
+    public function showBook(Book $book){
+        return view('book.admin.book-show', compact('book'));
 
     }
     /**
@@ -130,19 +141,19 @@ class BookController extends Controller
             'status' => $request->status
         ]);
         
-       if(BookCategory::where('book_id', $book->id)
-        ->where('category_id', $category->id)->count() == 0){
-            if($request->filled('category')) {
+        if($request->filled('category')) {
+            if(BookCategory::where('book_id', $book->id)
+                ->where('category_id', $category->id)->count() == 0){
                 BookCategory::create([
                     'book_id' => $book->id,
                     'category_id'=> $category->id,
                 ]);
+            }else{
+                return redirect()->back()->withErrors(['category' => 'Category Already Added']);
             }
-        }else{
-            return redirect()->back()->withErrors(['category' => 'Category Already Added']);
         }
         
-        return Redirect::route('book.edit', $book)->with('status', 'book-updated');
+        return Redirect::route('book.edit', $book)->with('status', 'Book Info Updated Successfully');
     }
 
     /**
@@ -160,7 +171,7 @@ class BookController extends Controller
             $book->cover = $request->file('cover')->hashName();
         }
         $book->update();
-        return Redirect::route('book.edit', $book)->with('status', 'book-cover-updated');
+        return Redirect::route('book.edit', $book)->with('status', 'Book Cover Updated');
     }
 
     /**
@@ -168,18 +179,23 @@ class BookController extends Controller
      */
     public function destroyBook(Request $request, Book $book){
         
-        $request->validateWithBag('bookDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        $validated = Validator::make($request->all(), [
+            'password' => ['required', 'current_password']
+           ]);
+    
+           if($validated->fails()){
+           
+            return Redirect::back()->with('book', "$book->id")->withErrors($validated);
+            
+           }else{
 
-        $imagePath = 'storage/book_cover/'. $book->cover;
-        if(File::exists($imagePath)){
-            File::delete($imagePath);
-        }
-        
-        $book->delete();
-
-        return Redirect::route('book.index')->with('status', 'book-deleted');
+            $imagePath = 'storage/book_cover/'. $book->cover;
+            if(File::exists($imagePath)){
+                File::delete($imagePath);
+            }
+                $book->delete();
+                return Redirect::route('book.index')->with('status', 'Book Deleted Successfully');
+           }
 
     }
 
@@ -215,11 +231,12 @@ class BookController extends Controller
     protected function checkCategory($request, $category){
 
         $category = Category::where('name', '=', $request->category)->first();
-      
-        if($category == null){
-            $category = Category::create(['name' => $request->category]);
+        
+        if($request->filled('category')) {
+            if($category == null){
+                $category = Category::create(['name' => $request->category]);
+            }
         }
-
         return $category;
     }
 
@@ -233,7 +250,7 @@ class BookController extends Controller
             })->with('books')->withCount('books')->paginate(10);
             if(count($authors) == 0){
 
-                return Redirect::back()->with('message','No Author Found');
+                return Redirect::back()->with('statusError','No Author Found');
             }
         }
     
@@ -248,7 +265,7 @@ class BookController extends Controller
         $validated = $request->validate(['name' => ['string', 'unique:authors,name,'.$author->id]]);
         $author->update($validated);
 
-       return Redirect::route('author.edit', $author)->with('status', 'author-updated');
+       return Redirect::route('author.edit', $author)->with('status', 'Author Updated Successfully');
     }
 
     public function authorDestroy(Author $author) {
@@ -267,7 +284,7 @@ class BookController extends Controller
             })->with('books')->withCount('books')->paginate(10);
             if(count($publishers) == 0){
 
-                return Redirect::back()->with('message','No Publisher Found');
+                return Redirect::back()->with('statusError','No Publisher Found');
             }
         }
 
@@ -282,7 +299,7 @@ class BookController extends Controller
         $validated = $request->validate(['name' => ['string', 'unique:publishers,name,'.$publisher->id]]);
         $publisher->update($validated);
 
-       return Redirect::route('publisher.edit', $publisher)->with('status', 'publisher-updated');
+       return Redirect::route('publisher.edit', $publisher)->with('status', 'Publisher Updated Successfully');
     }
 
     public function publisherDestroy(Publisher $publisher) {
@@ -300,7 +317,7 @@ class BookController extends Controller
             })->paginate(10);
             if(count($categories) == 0){
 
-                return Redirect::back()->with('message','No Category Found');
+                return Redirect::back()->with('statusError','No Category Found');
             }
         }
 
@@ -322,7 +339,7 @@ class BookController extends Controller
             'name' => $request->name,
         ]);
 
-        return Redirect::route('category.create')->with('status', 'category-created');
+        return Redirect::route('category.create')->with('status', 'New Category Created');
     }
 
     public function categoryEdit(Category $category) {
@@ -334,7 +351,7 @@ class BookController extends Controller
         $validated = $request->validate(['name' => ['string']]);
         $category->update($validated);
 
-       return Redirect::route('category.edit', $category)->with('status', 'category-updated');
+       return Redirect::route('category.edit', $category)->with('status', 'Category Updated Successfully');
     }
 
     public function categoryDestroy(Category $category) {
@@ -346,7 +363,7 @@ class BookController extends Controller
     public function bookCategoryDestroy(Book $book,BookCategory $bookCategory) {
         $bookCategory->delete();
 
-        return Redirect::back()->with('status', 'book-updated');
+        return Redirect::back()->with('status', 'Book Category Deleted Successfully');
     }
 
 

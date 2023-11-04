@@ -5,6 +5,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -91,7 +92,8 @@ Route::middleware(['auth','role:admin,librarian'])->group(function(){
 
     Route::get('/book', [BookController::class, 'index'])->name('book.index');
     Route::get('/book/create', [BookController::class, 'createBook'])->name('book.create');
-    Route::get('/book/{book}', [BookController::class, 'editBook'])->name('book.edit');
+    Route::get('/book/{book}', [BookController::class, 'showBook'])->name('book.show');
+    Route::get('/book/edit/{book}', [BookController::class, 'editBook'])->name('book.edit');
     Route::post('/book/create', [BookController::class, 'storeBook'])->name('book.store');
     Route::patch('/book/{book}', [BookController::class, 'updateBook'])->name('book.update');
     Route::patch('/book/cover/{book}', [BookController::class, 'updateCover'])->name('book.cover');
@@ -99,9 +101,19 @@ Route::middleware(['auth','role:admin,librarian'])->group(function(){
     Route::get('/book/bookCategory/{bookCategory}', [BookController::class, 'bookCategoryDestroy'])->name('bookCategory.destroy');
 
     Route::get('/requests', [BookRequestController::class, 'index'])->name('request.index');
-
+    Route::get('/requests/pending', [BookRequestController::class, 'index'])->name('pending');
+    Route::get('/requests/approved', [BookRequestController::class, 'index'])->name('approved');
+    Route::get('/requests/cancelled', [BookRequestController::class, 'index'])->name('cancelled');
+    Route::get('/requests/{bookRequest}', [BookRequestController::class, 'viewRequest'])->name('request.view');
+    Route::patch('/requests/status/{bookRequest}', [BookRequestController::class, 'updateStatus'])->name('request.status.update');
+    Route::delete('/requests/{bookRequest}', [BookRequestController::class, 'destroyRequest'])->name('request.destroy');
     
-    Route::get('/borrowed', [BookRequestController::class, 'borrowedIndex'])->name('borrowed.index');
+    Route::get('/borrowed', [BorrowBookController::class, 'index'])->name('borrowed.index');
+    Route::get('/borrowed/borrowed', [BorrowBookController::class, 'index'])->name('borrowed');
+    Route::get('/borrowed/returned', [BorrowBookController::class, 'index'])->name('returned');
+    Route::post('/borrowed/{bookRequest}',[BorrowBookController::class, 'store'])->name('borrowed.store');
+    Route::post('/book/borrowed/{book}',[BorrowBookController::class, 'store'])->name('book.borrowed.store');
+    Route::patch('/borrowed/{borrowBook}',[BorrowBookController::class, 'returnedBook'])->name('return.book');
 
     
 }); // End Group Admin & Librarian Middleware
@@ -115,11 +127,11 @@ Route::middleware(['auth','role:user','status','verified' ])->group(function(){
     Route::post('/dashboard/books/{book}', [UserController::class, 'storeBookRequest'])->name('user.storeRequest');
     
     Route::get('/dashboard/requests', [UserController::class, 'showRequests'])->name('user.requests');
-    Route::get('/dashboard/requests/pending', [UserController::class, 'requestPending'])->name('request.pending');
-    Route::get('/dashboard/requests/approved', [UserController::class, 'requestApproved'])->name('request.approved');
-    Route::get('/dashboard/requests/cancelled', [UserController::class, 'requestCancelled'])->name('request.cancelled');
-    Route::post('/dashboard/requests/{bookRequest}', [UserController::class, 'updateRequest'])->name('request.update');
-    Route::delete('/dashboard/requests/{bookRequest}', [UserController::class, 'destroyRequest'])->name('request.destroy');
+    Route::get('/dashboard/requests/pending', [UserController::class, 'requestPending'])->name('user.request.pending');
+    Route::get('/dashboard/requests/approved', [UserController::class, 'requestApproved'])->name('user.request.approved');
+    Route::get('/dashboard/requests/cancelled', [UserController::class, 'requestCancelled'])->name('user.request.cancelled');
+    Route::post('/dashboard/requests/{bookRequest}', [UserController::class, 'updateRequest'])->name('user.request.update');
+    Route::delete('/dashboard/requests/{bookRequest}', [UserController::class, 'destroyRequest'])->name('user.request.destroy');
     
     Route::get('/dashboard/borrowed', [UserController::class, 'showBorrowBooks'])->name('user.borrowed');
 

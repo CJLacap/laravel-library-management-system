@@ -3,15 +3,15 @@
         {{ __('Requests |') }}
     </a>
     
-    <x-nav-link :href="route('request.pending')" :active="request()->routeIs('request.pending')">
+    <x-nav-link :href="route('user.request.pending')" :active="request()->routeIs('user.request.pending')">
         {{ __('Pending') }}
     </x-nav-link>
 
-    <x-nav-link :href="route('request.approved')" :active="request()->routeIs('request.approved')">
+    <x-nav-link :href="route('user.request.approved')" :active="request()->routeIs('user.request.approved')">
         {{ __('Approved') }}
     </x-nav-link>
 
-    <x-nav-link :href="route('request.cancelled')" :active="request()->routeIs('request.cancelled')">
+    <x-nav-link :href="route('user.request.cancelled')" :active="request()->routeIs('user.request.cancelled')">
         {{ __('Cancelled/Denied') }}
     </x-nav-link>
     

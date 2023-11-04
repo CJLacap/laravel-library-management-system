@@ -1,11 +1,12 @@
 <x-app-layout>
     @section('title', 'Borrowed Books')
     <x-slot name="header">
-        @include('admin.partials.request.request-header')
+       @include('borrowed.partials.borrowed-header')
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
+            <h3 class="text-white">Search Borrowed Books</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get')
@@ -19,34 +20,23 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <input type="search" id="user" name="user"
+                    <input type="search" id="search" name="search"
                         class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search User Information" required>
+                        placeholder="Search Borrowed Books Information" required>
                     <button type="submit"
                         class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
-
-                @if (session()->has('message'))
-                    <div class="mt-6 text-red-600">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
             </form>
+            @include('layouts.partials.message-status')  
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white dark:bg-gray-800  shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="max-w-10xl relative">
+                        <div class="max-w-10xl overflow-x-auto  relative">
                             <table class="mx-auto  text-gray-500">
-                                <thead class=" text-gray-300 uppercase  bg-gray-700">
+                                <thead class=" text-gray-300 uppercase bg-gray-700">
                                     <tr>
                                         <th scope="col" class="py-6 px-6">
                                             ID
-                                        </th>
-                                        <th scope="col" class="py-6 px-6">
-                                            First Name
-                                        </th>
-                                        <th scope="col" class="py-6 px-6">
-                                            Last Name
                                         </th>
                                         <th scope="col" class="py-6 px-6">
                                             Book Title
@@ -55,39 +45,61 @@
                                             Author
                                         </th>
                                         <th scope="col" class="py-6 px-6">
-                                            Date
+                                            Borrower
+                                        </th>
+                                        <th scope="col" class="py-6 px-6">
+                                            Librarian
+                                        </th>
+                                        <th scope="col" class="py-6 px-6">
+                                            Borrowed Date
+                                        </th>
+                                        <th scope="col" class="py-6 px-6">
+                                            Due Date
+                                        </th>
+                                        <th scope="col" class="py-6 px-6">
+                                            Returned Date
                                         </th>
                                         <th scope="col" class="py-6 px-6">
                                             Status
                                         </th>
-                                        <th scope="col">
-
+                                        <th scope="col" class="py-6 px-6">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($borrowBooks as $borrowBook)
-                                        <tr class="bg-gray-800 border-b text-white">
-                                            <td class="py-4 px-6">
-                                                    
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->id }} 
                                             </td>
-                                            <td class="py-4 px-6">
-                                                    
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->book->title }}  
                                             </td>
-                                            <td class="py-4 px-6">
-                                                
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->book->author->name }}
                                             </td>
-                                            <td class="py-4 px-6">
-                                                
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->user->first_name }} 
+                                                {{ $borrowBook->user->last_name }} 
                                             </td>
-                                            <td class="py-4 px-6">
-                                                
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->librarian->first_name }} 
+                                                {{ $borrowBook->librarian->last_name }} 
                                             </td>
-                                            <td class="py-4 px-6">
-                                                
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->created_at->format('M d, Y') }}
                                             </td>
-                                            <td class="py-4 px-6">
-                                                
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->due_at->format('M d, Y') }} 
+                                            </td>
+                                            <td class="py-4 px-6 text-center">
+                                                @if($borrowBook->returned_at != null)
+                                                {{ $borrowBook->returned_at->format('M d, Y') }}
+                                                @endif 
+                                            </td>
+                                            <td class="py-4 px-6 text-center">
+                                                {{ $borrowBook->status }} 
                                             </td>
                                             <td class="relative py-4 px-6">
                                                 <x-dropdown align="right" width="48">
@@ -102,11 +114,17 @@
                                                         <x-dropdown-link :href="route('profile.edit')">
                                                             {{ __('View') }}
                                                         </x-dropdown-link>
-                                                        <x-dropdown-link :href="route('profile.edit')">
-                                                            {{ __('Approve') }}
+                                                        <form method="post" action="{{ route('return.book', $borrowBook) }}">
+                                                            @csrf
+                                                            @method('patch')
+                                                        <x-dropdown-link :href="route('return.book', $borrowBook)"
+                                                            onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                                            {{ __('Return') }}
                                                         </x-dropdown-link>
+                                                        </form>
                                                         <x-dropdown-link :href="route('profile.edit')">
-                                                            {{ __('Reject') }}
+                                                            {{ __('Delete') }}
                                                         </x-dropdown-link>
                                                         </x-slot>
                                                 </x-dropdown>

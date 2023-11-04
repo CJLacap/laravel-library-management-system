@@ -49,26 +49,43 @@ class UserController extends Controller
     }
 
     public function storeBookRequest(Book $book){
-        
-        if(BookRequest::where('user_id', Auth::user()->id)
-                        ->where('book_id', $book->id)
-                        ->where('status', '=', 'pending')->count() == 0){
+       
+        if($book->status == 'available'){
+            if(BorrowBook::where('book_id', '=' , $book->id)
+                        ->where('status', '=', 'borrowed')->count() < $book->copies){
+                if(BookRequest::where('book_id', '=', $book->id)
+                            ->where('status', '=', 'approved')->count()  < $book->copies){
+                    if(BookRequest::where('user_id', Auth::user()->id)
+                                    ->where('book_id', $book->id)
+                                    ->where('status', '=', 'pending')->count() == 0 && 
+                                    BookRequest::where('user_id', Auth::user()->id)
+                                        ->where('book_id', $book->id)
+                                        ->where('status', '=', 'approved')->count() == 0 ){
 
-            BookRequest::create([
-                'user_id' => Auth::user()->id,
-                'book_id' => $book->id,
-            ]);
+                                        BookRequest::create([
+                                            'user_id' => Auth::user()->id,
+                                            'book_id' => $book->id,
+                                        ]);  
+                                        return Redirect::back()->with('status', 'request-sent');
+                                        
+                                    }else{
+                                        return Redirect::back()->with('statusError', 'You Already Sent A Request To This Book!');
+                                    }
+                    }else{
+                        return Redirect::back()->with('statusError', 'There Is Already Been Approved Request For This Book.');
+                    }
+
+            }else{
+                return Redirect::back()->with('statusError', 'The Book Has Already Been Borrowed.');
+            }
+        }else{
+            return Redirect::back()->with('statusError', 'The Book Is Unavailable/Out Of Order.');
         }
-        else{
-            return Redirect::back()->with('status', 'request-exists');
-        }
-        
-        return Redirect::back()->with('status', 'request-sent');
 
     }
 
     public function showRequests(){
-        $bookRequests = BookRequest::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate();
+        $bookRequests = BookRequest::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
 
         return view('user.user-requests', compact('bookRequests'));
     }
@@ -99,15 +116,16 @@ class UserController extends Controller
     }
 
     public function updateRequest(Request $request, BookRequest $bookRequest){
-        if($request->status == 'cancelled'){
-            $bookRequest->update(['status'=> $request->status]);
+        if($request->status == 'cancel'){
+            $bookRequest->update(['status'=> 'cancelled']);
         }
         return Redirect::route('user.requests')->with('status', 'You Successfully Cancelled Your Request');
     }
 
     public function destroyRequest(BookRequest $bookRequest){
-
-        $bookRequest->delete();
+        if(Auth::user()->id == $bookRequest->user_id){
+            $bookRequest->delete();
+        }
 
         return Redirect::route('user.requests')->with('status', 'You Successfully Deleted Your Request');
     }
@@ -118,6 +136,5 @@ class UserController extends Controller
         return view('user.user-borrowed', compact('borrowBooks'));
         
     }
-
 
 }

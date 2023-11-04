@@ -6,7 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @include('user.partials.request-message')
+            @include('layouts.partials.message-status')
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="max-w-10xl overflow-x-auto relative">
@@ -39,7 +39,7 @@
                             <tbody>
                                
                                 @foreach ($bookRequests as $bookRequest)
-                                <tr class="bg-gray-800 border-b text-sm text-white">
+                                <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
                                     <td class="py-4 px-6 text-center">
                                         {{ $bookRequest->book->title }}
                                     </td>
@@ -59,10 +59,10 @@
                                         {{ $bookRequest->remarks }}
                                     </td>
                                     @if($bookRequest->status == 'pending')
-                                    <form method="POST" action="{{ route('request.update', $bookRequest) }}">
+                                    <form method="POST" action="{{ route('user.request.update', $bookRequest) }}">
                                         @csrf
                                         @method('POST')
-                                        <input type="hidden" name="status" value='cancelled'>
+                                        <input type="hidden" name="status" value='cancel'>
                                         <td class="py-2 px-3">
                                             <x-danger-button>
                                                 {{ __('Cancel') }}
@@ -70,7 +70,7 @@
                                         </td>
                                     </form>
                                     @elseif($bookRequest->status == 'cancelled' || $bookRequest->status == 'denied')
-                                    <form method="POST" action="{{ route('request.destroy', $bookRequest) }}">
+                                    <form method="POST" action="{{ route('user.request.destroy', $bookRequest) }}">
                                         @csrf
                                         @method('delete')
                                         <td class="py-2 px-3">

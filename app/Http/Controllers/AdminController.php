@@ -33,7 +33,7 @@ class AdminController extends Controller
             $role = 'librarian';
             $librarians = $this->searchUser($search, $role);
             if(count($librarians) == 0){
-              return Redirect::route('librarian.accounts')->with('message','No Librarian Found');
+              return Redirect::back()->with('statusError','No Librarian Found');
             }
           }
 
@@ -52,6 +52,7 @@ class AdminController extends Controller
             [function ($query) use ($search){
                 $query->where('first_name','LIKE','%'. $search.'%')
                 ->orWhere('last_name','LIKE','%'. $search.'%')
+                ->orWhere(DB::raw("concat(first_name,' ',last_name)"), 'LIKE', '%'. $search.'%')
                 ->orWhere('email','LIKE','%'. $search.'%')
                 ->orWhere('phone','LIKE','%'. $search.'%')
                 ->orWhere('address','LIKE','%'. $search.'%')
@@ -84,7 +85,7 @@ class AdminController extends Controller
 
         ]);
 
-        return  Redirect::route('librarian.create')->with('status', 'librarian-created');
+        return  Redirect::route('librarian.create')->with('status', 'Successfully Created A New Librarian Account');
     }
 
     /**
@@ -102,7 +103,7 @@ class AdminController extends Controller
         
         $librarian->update($request->validated());
 
-        return Redirect::route('librarian.edit', $librarian)->with('status', 'librarian-updated');
+        return Redirect::route('librarian.edit', $librarian)->with('status', 'Librarian Account Updated Successfully');
 
     }
 
@@ -117,7 +118,11 @@ class AdminController extends Controller
         
         $librarian->update(['status' => $request->status]);
 
-        return Redirect::route('librarian.edit', $librarian)->with('status', 'user-status-updated');
+        if($request->status == 'blocked'){
+            return Redirect::route('librarian.edit', $librarian)->with('status', "Successfully Blocked This Librarian Account");
+        }else{
+            return Redirect::route('librarian.edit', $librarian)->with('status', "Successfully Unblocked This Librarian Account");
+        }
     }
 
     /**
@@ -131,7 +136,7 @@ class AdminController extends Controller
         
         $librarian->delete();
 
-        return Redirect::route('librarian.accounts');
+        return Redirect::route('librarian.accounts')->with('status', "Successfully Deleted A Librarian Account");
 
     }
 
@@ -146,7 +151,7 @@ class AdminController extends Controller
             $role = 'user';
             $users = $this->searchUser($search, $role);
             if(count($users) == 0){
-              return Redirect::route('user.accounts')->with('message','No User Found');
+              return Redirect::route('user.accounts')->with('statusError','No User Found');
             }
           }
 
@@ -177,7 +182,7 @@ class AdminController extends Controller
 
         ]);
 
-        return  Redirect::route('user.create')->with('status', 'user-created');
+        return  Redirect::route('user.create')->with('status', 'Successfully Created A New User Account');
     }
 
     /**
@@ -195,7 +200,7 @@ class AdminController extends Controller
         
         $user->update($request->validated());
 
-        return Redirect::route('user.edit', $user)->with('status', 'user-updated');
+        return Redirect::route('user.edit', $user)->with('status', 'User Account Updated Successfully');
 
     }
     
@@ -210,7 +215,11 @@ class AdminController extends Controller
         
         $user->update(['status' => $request->status]);
 
-        return Redirect::route('user.edit', $user)->with('status', 'user-status-updated');
+        if($request->status == 'blocked'){
+            return Redirect::route('user.edit', $user)->with('status', "Successfully Blocked This User Account");
+        }else{
+            return Redirect::route('user.edit', $user)->with('status', "Successfully Unblocked This User Account");
+        }
     }
 
     /**

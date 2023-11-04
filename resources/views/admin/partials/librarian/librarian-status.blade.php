@@ -64,21 +64,21 @@
     @if($librarian->status == 'blocked' or $librarian->status == 'inactive')
         <header>
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {{ __('Reactivate This Account') }}
+                {{ __('Unblocked This Account') }}
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('Once this account is reactivated, This account will be able to login to this web application.') }}
+                {{ __('Once this account is unblocked, This account will be able to login to this web application.') }}
             </p>
         
         </header>
 
         <x-green-button
             x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-reactivate')"
-        >{{ __('Reactivate Account') }}</x-green-button>
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-unblocked')"
+        >{{ __('Unblocked Account') }}</x-green-button>
 
-        <x-modal name="confirm-user-reactivate" :show="$errors->userStatus->isNotEmpty()" focusable>
+        <x-modal name="confirm-user-unblocked" :show="$errors->userStatus->isNotEmpty()" focusable>
             <form method="post" action="{{ route('librarian.status', $librarian) }}" class="p-6">
                 @csrf
                 @method('patch')
@@ -86,11 +86,11 @@
                 <input type="hidden" value="active" name="status">
 
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    {{ __('Are you sure you want to reactivate this account?') }}
+                    {{ __('Are you sure you want to unblocked this account?') }}
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Once this account is reactivate, This account will be able to login to this web application. Please enter your password to confirm you would like to reactivate this account.') }}
+                    {{ __('Once this account is unblocked, This account will be able to login to this web application. Please enter your password to confirm you would like to unblocked this account.') }}
                 </p>
 
                 <div class="mt-6">
@@ -113,7 +113,7 @@
                     </x-secondary-button>
 
                     <x-green-button class="ml-3">
-                        {{ __('Reactivate Account') }}
+                        {{ __('Unblocked Account') }}
                     </x-green-button>
                 </div>
             </form>
