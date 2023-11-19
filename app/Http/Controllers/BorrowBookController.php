@@ -40,7 +40,8 @@ class BorrowBookController extends Controller
 
     public function searchBorrowed($search){
         return BorrowBook::where(function ($query) use ($search){
-            $query->where('due_at','LIKE',"%$search%");
+            $query->where('due_at','LIKE',"%$search%")
+            ->orWhere('remarks','LIKE',"%$search%");
            
         })
         ->orWhereHas('book', function ($query) use ($search){
@@ -98,7 +99,7 @@ class BorrowBookController extends Controller
                 ]);
 
                 $bookRequest->delete();
-                return Redirect::back()->with('status', 'Book Borrowed Successfully');
+                return Redirect::route('request.index')->with('status', 'Book Borrowed Successfully');
                     
             }else{
                 return Redirect::back()->with('statusError', 'The Book Has Already Been Borrowed.');
@@ -129,19 +130,79 @@ class BorrowBookController extends Controller
         }
     }
 
-    public function returnedBook(BorrowBook $borrowBook){
-        if($borrowBook->status == 'borrowed'){
+    public function extendDueDate(Request $request, BorrowBook $borrowBook){
+        
+        $validated = Validator::make($request->all(),[
+            'return_date' => ['required', 'date', "after:$borrowBook->due_at"]
+        ]);
+
+        if($validated->fails()){
+           
+            return Redirect::back()->with('extendBB', "$borrowBook->id")->withErrors($validated);
+            
+           }else{
             $borrowBook->update([
-                'status' => 'returned',
-                'librarian_id' => Auth::user()->id,
-                'returned_at' => now(),
+                'due_at' => $request->return_date,
+                'remarks' => $request->remarks
             ]);
 
-            return Redirect::back()->with('status', 'Book Returned Successfully');
+            return Redirect::back()->with('status', "Borrowed Book Due Date Successfully Extended");
+           }
+
+    }
+
+    public function returnedBook(BorrowBook $borrowBook, Request $request){
+        
+        if($request->has('remarks') != null && $request->has('status') == null){
+            $borrowBook->update([
+                'remarks' => $request->remarks
+            ]);
+            return Redirect::back()->with('status', 'Remarks Successfully Updated');
+        }
+        if($request->has('status')){
+            if($borrowBook->status == 'borrowed'){
+                $borrowBook->update([
+                    'status' => 'returned',
+                    'librarian_id' => Auth::user()->id,
+                    'returned_at' => now(),
+                ]);
+
+                return Redirect::back()->with('status', 'Book Returned Successfully');
+            }else{
+                
+                return Redirect::back()->with('statusError', 'Book Already Been Returned');
+            }
         }else{
-            
-            return Redirect::back()->with('statusError', 'Book Already Been Returned');
+            return Redirect::back();
         }
         
     }
+
+    public function showBorrowed(BorrowBook $borrowBook){
+        return view('borrowed.show-borrowed', compact('borrowBook'));
+    }
+
+    public function destroyBorrowed(Request $request, BorrowBook $borrowBook){
+
+        if(Auth::user()->role != 'admin'){
+            return Redirect::back()->with('statusError', 'You are not authorized to delete this borrowed book history');
+        }
+
+        $validated = Validator::make($request->all(), [
+            'password' => ['required', 'current_password']
+           ]);
+    
+           if($validated->fails()){
+           
+            return Redirect::back()->with('bb', "$borrowBook->id")->withErrors($validated);
+            
+           }else{
+                if($borrowBook->status == "returned"){
+                    $borrowBook->delete();
+                    return Redirect::route('borrowed.index')->with('status', 'Borrowed Book History Deleted Successfully');
+                }else{
+                    return Redirect::back()->with('statusError', 'This Borrowed Book Has Not Yet Been Returned.');
+                }
+           }
+        }
 }

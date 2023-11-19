@@ -6,7 +6,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LibrarianUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Book;
+use App\Models\BookRequest;
+use App\Models\BorrowBook;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -18,7 +22,16 @@ class AdminController extends Controller
      * Display Admin Dashboard
      */
     public function index(){
-        return view('admin.index');
+        $users = User::all();
+        $books = Book::all();
+        $borrowBooks = BorrowBook::all();
+        $bookRequests = BookRequest::all();
+        $weekBookRequests = BookRequest::where('created_at', '>', Carbon::now()->startOfWeek())
+                            ->where('created_at', '<', Carbon::now()->endOfWeek())->get();
+        $weekDueBooks = BorrowBook::where('due_at', '>', Carbon::now()->startOfWeek())
+                            ->where('due_at', '<', Carbon::now()->endOfWeek())->get();
+   
+        return view('admin.index', compact('books','borrowBooks', 'bookRequests','users','weekBookRequests','weekDueBooks'));
     }
 
 
@@ -39,7 +52,6 @@ class AdminController extends Controller
 
         return view('admin.librarian-accounts', compact('librarians'));
 
-       
     }
 
     /**
@@ -233,7 +245,7 @@ class AdminController extends Controller
         
         $user->delete();
 
-        return Redirect::route('user.accounts');
+        return Redirect::route('user.accounts')->with('status', "Successfully Deleted A User Account");
     }
 
 

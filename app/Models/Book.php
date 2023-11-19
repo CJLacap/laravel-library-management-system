@@ -27,5 +27,7 @@ class Book extends Model
         return $this->hasMany(BorrowBook::class)->where('status', 'borrowed');
     }
 
+    
+
 
 }

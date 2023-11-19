@@ -16,15 +16,15 @@ class BookRequestController extends Controller
 {
     public function index(Request $request){
     
-        $bookRequests = BookRequest::orderBy('status')->orderBy('created_at', 'desc')->paginate(10);
+        $bookRequests = BookRequest::orderBy('status')->paginate(10);
 
         if(Route::is('pending')){
-            $bookRequests = BookRequest::where('status', '=', 'pending')->latest()->paginate(10);
+            $bookRequests = BookRequest::where('status', '=', 'pending')->paginate(10);
         }elseif(Route::is('approved')){
-            $bookRequests = BookRequest::where('status', '=', 'approved')->latest()->paginate(10);
+            $bookRequests = BookRequest::where('status', '=', 'approved')->paginate(10);
         }elseif(Route::is('cancelled')){
             $bookRequests = BookRequest::where('status', '=', 'cancelled')
-                                    ->orWhere('status', '=', 'denied')->latest()->paginate(10);
+                                    ->orWhere('status', '=', 'denied')->paginate(10);
         }
         
         if($search = $request->search){
@@ -83,6 +83,9 @@ class BookRequestController extends Controller
         if($bookRequest->book->copies - $bookRequest->book->borrowBooks->count() == 0 && $request->status == 'approved'){
             return Redirect::back()->with('statusError', 'The Book Has Already Been Borrowed.');
         }
+        if($request->status == $bookRequest->status){
+            return Redirect::back()->with('statusError', "The Request Has Already Been {$bookRequest->status}.");
+        }
  
         if($request->has('password')){
             $validated = Validator::make($request->all(), [
@@ -126,7 +129,7 @@ class BookRequestController extends Controller
         
        }else{
             $bookRequest->delete();
-            return Redirect::route('request.index')->with('status', 'Request Delete Successfully');
+            return Redirect::route('request.index')->with('status', 'Request Deleted Successfully');
        }
     }
     

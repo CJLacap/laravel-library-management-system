@@ -10,7 +10,7 @@
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get')
-                <label for="search"
+                <label for="librarian"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -35,6 +35,9 @@
                             <thead class=" text-gray-300 uppercase bg-gray-700">
                                 <tr>
                                     <th scope="col" class="py-6 px-6">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="py-6 px-6">
                                         First Name
                                     </th>
                                     <th scope="col" class="py-6 px-6">
@@ -56,13 +59,16 @@
                                         Status
                                     </th>
                                     <th scope="col">
-
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($librarians as $librarian)
-                                    <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
+                                    <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
+                                        <td class="py-4 px-6">
+                                            {{ $librarian->id }}
+                                        </td>
                                         <td class="py-4 px-6">
                                             {{ $librarian->first_name }}
                                         </td>
@@ -85,8 +91,25 @@
                                             {{ $librarian->status }}
                                         </td>
                                         <td class="py-4 px-6">
-                                            <a href="librarian/{{ $librarian->id }}"
-                                                class="bg-sky-600 text-white px-4 py-2 rounded">view</a>
+                                            <x-dropdown align="right" width="48">
+                                                <x-slot name="trigger">
+                                                    <button
+                                                        class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                        type="button">
+                                                        <svg class="w-5 h-5" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            viewBox="0 0 4 15">
+                                                            <path
+                                                                d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                                        </svg>
+                                                    </button>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <x-dropdown-link :href="route('librarian.edit', $librarian)">
+                                                        {{ __('View/Edit') }}
+                                                    </x-dropdown-link>
+                                                </x-slot>
+                                            </x-dropdown>
                                         </td>
                                     </tr>
                                 @endforeach

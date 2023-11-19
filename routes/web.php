@@ -6,6 +6,7 @@ use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\BorrowBookController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +21,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/', 'homeIndex')->name('home');
+    Route::get('/Browse Books', 'homeBooks')->name('home.books');
+    Route::get('/About Us', 'aboutUs')->name('home.aboutUs');
+    Route::get('/Contact', 'contactUs')->name('home.contactUs');
+    Route::get('/Browse Books/{book}', 'homeBookShow')->name('home.book.show');
+  
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -52,6 +57,8 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::patch('/user/{user}', [AdminController::class, 'updateUser'])->name('user.update');
     Route::patch('/user/status/{user}', [AdminController::class, 'updateUserStatus'])->name('user.status');
     Route::delete('/user/{user}', [AdminController::class, 'destroyUser'])->name('user.destroy');
+
+    
 
 }); // End Group Admin Middleware
 
@@ -111,9 +118,12 @@ Route::middleware(['auth','role:admin,librarian'])->group(function(){
     Route::get('/borrowed', [BorrowBookController::class, 'index'])->name('borrowed.index');
     Route::get('/borrowed/borrowed', [BorrowBookController::class, 'index'])->name('borrowed');
     Route::get('/borrowed/returned', [BorrowBookController::class, 'index'])->name('returned');
+    Route::get('/borrowed/{borrowBook}',[BorrowBookController::class, 'showBorrowed'])->name('borrowed.show');
     Route::post('/borrowed/{bookRequest}',[BorrowBookController::class, 'store'])->name('borrowed.store');
     Route::post('/book/borrowed/{book}',[BorrowBookController::class, 'store'])->name('book.borrowed.store');
     Route::patch('/borrowed/{borrowBook}',[BorrowBookController::class, 'returnedBook'])->name('return.book');
+    Route::patch('/borrowed/{borrowBook}/extend',[BorrowBookController::class, 'extendDueDate'])->name('borrowed.extend');
+    Route::delete('/borrowed/{borrowBook}',[BorrowBookController::class, 'destroyBorrowed'])->name('borrowed.destroy');
 
     
 }); // End Group Admin & Librarian Middleware
@@ -134,5 +144,7 @@ Route::middleware(['auth','role:user','status','verified' ])->group(function(){
     Route::delete('/dashboard/requests/{bookRequest}', [UserController::class, 'destroyRequest'])->name('user.request.destroy');
     
     Route::get('/dashboard/borrowed', [UserController::class, 'showBorrowBooks'])->name('user.borrowed');
+    Route::get('/dashboard/borrowed/borrowed', [UserController::class, 'showBorrowBooks'])->name('user.borrowed.borrowed');
+    Route::get('/dashboard/borrowed/returned', [UserController::class, 'showBorrowBooks'])->name('user.borrowed.returned');
 
 }); // End Group User Middleware

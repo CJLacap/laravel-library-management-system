@@ -10,7 +10,7 @@
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get') 
-                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <label for="user" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -54,7 +54,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
-                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
                                             <td class="py-4 px-6">
                                                 {{ $user->first_name }}
                                             </td>
@@ -77,7 +77,29 @@
                                                 {{ $user->status }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                <a href="user/{{ $user->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">view</a>
+                                                <x-dropdown align="right" width="48">
+                                                    <x-slot name="trigger">
+                                                        <button
+                                                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                            type="button">
+                                                            <svg class="w-5 h-5" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                viewBox="0 0 4 15">
+                                                                <path
+                                                                    d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <x-dropdown-link :href="route('user.edit', $user)">
+                                                            @if(Auth::user()->role == 'admin')
+                                                                {{ __('View/Edit') }}
+                                                            @else
+                                                                {{ __('View') }}
+                                                            @endif
+                                                        </x-dropdown-link>
+                                                    </x-slot>
+                                                </x-dropdown>
                                             </td>
                                         </tr>
                                     @endforeach

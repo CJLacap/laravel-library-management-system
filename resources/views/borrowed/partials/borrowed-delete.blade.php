@@ -1,15 +1,15 @@
-<x-modal name="confirm-request-deletion-{{ $bookRequest->id }}" focusable>
-    <form method="post" action="{{ route('request.destroy', $bookRequest) }}" class="p-6">
+<x-modal name="confirm-borrowed-deletion-{{ $borrowBook->id }}" focusable>
+    <form method="post" action="{{ route('borrowed.destroy', $borrowBook) }}" class="p-6">
         @csrf
         @method('delete')
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Are you sure you want to delete this request?') }}
+            {{ __('Are you sure you want to delete this book borrowed data?') }}
        
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once this request is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this request.') }}
+            {{ __('Once this book borrowed is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this book borrowed.') }}
         </p>
 
         <div class="mt-6">
@@ -27,7 +27,7 @@
             </x-secondary-button>
 
             <x-danger-button class="ml-3">
-                {{ __('Delete Request') }}
+                {{ __('Delete') }}
             </x-danger-button>
         </div>
        
@@ -35,19 +35,19 @@
 </x-modal>
 
 
-@if ((session('br') == $bookRequest->id))
-<x-modal name="confirm-request-deletion-" :show="$errors->isNotEmpty" focusable>
-    <form method="post" action="{{ route('request.destroy', $bookRequest) }}" class="p-6">
+@if ((session('bb') == $borrowBook->id))
+<x-modal name="confirm-borrowed-deletion-" :show="$errors->isNotEmpty" focusable>
+    <form method="post" action="{{ route('borrowed.destroy', $borrowBook) }}" class="p-6">
         @csrf
         @method('delete')
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Are you sure you want to delete this request?') }}
+            {{ __('Are you sure you want to delete this book borrowed?') }}
        
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once this request is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this request.') }}
+            {{ __('Once this book borrowed is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this book borrowed.') }}
         </p>
 
         <div class="mt-6">
@@ -65,7 +65,7 @@
             </x-secondary-button>
 
             <x-danger-button class="ml-3">
-                {{ __('Delete Request') }}
+                {{ __('Delete') }}
             </x-danger-button>
         </div>
     </form>

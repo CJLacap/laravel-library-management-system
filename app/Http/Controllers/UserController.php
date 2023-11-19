@@ -8,9 +8,44 @@ use App\Models\BorrowBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class UserController extends Controller
 {
+    /**
+     * Landing Page and Not Authenticated User
+     */
+    public function homeIndex(){
+        return view('home.index');
+    }
+    public function aboutUs(){
+        return view('home.about-us');
+    }
+    public function contactUs(){
+        return view('home.contact');
+    }
+    public function homeBooks(Request $request){
+        $books = $books = Book::orderBy('title', 'asc')->paginate(9);
+        if($search = $request->search){
+            $books = $this->searchBook($search);
+            if(count($books) == 0){
+              return Redirect::back()->with('statusError','No Book Found');
+            }
+          }
+        return view('home.books.index', compact('books'));
+    }
+
+    public function homeBookShow(Book $book){
+        return view('home.books.show', compact('book'));
+    }
+
+    /**
+     * Start of User Auth Functions
+     */
+
+     /**
+     * Auth User Dashboard
+     */
     public function index(){
         return view('user.index');
     }
@@ -20,7 +55,7 @@ class UserController extends Controller
         if($search = $request->search){
           $books = $this->searchBook($search);
           if(count($books) == 0){
-            return Redirect::back()->with('message','No Book Found');
+            return Redirect::back()->with('statusError','No Book Found');
           }
         }
         return view('book.user.index', compact('books'));
@@ -41,7 +76,7 @@ class UserController extends Controller
                 ->orWhereHas('publisher', function ($query) use ($search){
                     $query->where('name','LIKE',"%$search%");
     
-            })->paginate(12);  
+            })->paginate();  
     }
 
     public function show(Book $book){
@@ -131,8 +166,15 @@ class UserController extends Controller
     }
 
     public function showBorrowBooks(BorrowBook $borrowBook){
+
         $borrowBooks = BorrowBook::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate();
 
+        if(Route::is('user.borrowed.borrowed')){
+            $borrowBooks = BorrowBook::where('status', '=', 'borrowed')->latest()->paginate(10);
+        }elseif(Route::is('user.borrowed.returned')){
+            $borrowBooks = BorrowBook::where('status', '=', 'returned')->latest()->paginate(10);
+        }
+       
         return view('user.user-borrowed', compact('borrowBooks'));
         
     }

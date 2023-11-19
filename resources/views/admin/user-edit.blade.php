@@ -29,20 +29,20 @@
                             <div>
                                 <x-input-label for="first_name" :value="__('First Name')" />
                                 <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full"
-                                    :value="old('first_name', $user->first_name)" required autofocus autocomplete="name" />
+                                    :value="old('first_name', $user->first_name)" required autofocus autocomplete="first name" />
                                 <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
                             </div>
                             <div>
                                 <x-input-label for="last_name" :value="__('Last Name')" />
                                 <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full"
-                                    :value="old('last_name', $user->last_name)" required autofocus autocomplete="name" />
+                                    :value="old('last_name', $user->last_name)" required autofocus autocomplete="last name" />
                                 <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
                             </div>
 
                             <div>
                                 <x-input-label for="email" :value="__('Email Address')" />
                                 <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                                    :value="old('email', $user->email)" required autocomplete="username" />
+                                    :value="old('email', $user->email)" required autocomplete="email" />
                                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
                                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
@@ -68,30 +68,30 @@
                             <div>
                                 <x-input-label for="address" :value="__('Address')" />
                                 <x-text-input id="address" name="address" type="text" class="mt-1 block w-full"
-                                    :value="old('address', $user->address)" />
+                                    :value="old('address', $user->address)"  autocomplete="address"/>
                                 <x-input-error class="mt-2" :messages="$errors->get('address')" />
                             </div>
 
                             <div>
                                 <x-input-label for="phone" :value="__('Phone Number')" />
                                 <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full"
-                                    :value="old('phone', $user->phone)" />
+                                    :value="old('phone', $user->phone)" autocomplete='phone' />
                                 <x-input-error class="mt-2" :messages="$errors->get('phone')" />
                             </div>
 
                             <div>
                                 <x-input-label :value="__('Status')" class="mb-2" />
                                 <input type="radio" id="active" name="status" value="active"
-                                    {{ $user->status == 'active' ? 'checked' : '' }} @disabled(true) /> 
-                                    <label>Active</label>
+                                    {{ $user->status == 'active' ? 'checked' : '' }} @readonly(true)/> 
+                                    <label for="active">Active</label>
 
                                 <input type="radio" id="inactive" name="status" value="inactive"
                                     {{ $user->status == 'inactive' ? 'checked' : '' }} @disabled(true) /> 
-                                    <label>Inactive</label>
+                                    <label for="inactive">Inactive</label>
 
                                 <input type="radio" id="blocked" name="status" value="blocked"
                                     {{ $user->status == 'blocked' ? 'checked' : '' }} @disabled(true) />
-                                    <label>Blocked</label>
+                                    <label for="blocked">Blocked</label>
                             </div>
                             @if(Auth::user()->role === 'admin')
                             <div class="flex items-center gap-4">
@@ -108,7 +108,7 @@
                     @include('admin.partials.user.user-status')
                 </div>
             </div>
-
+            
             <div class="mt-4 p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('admin.partials.user.user-delete')

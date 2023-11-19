@@ -111,7 +111,7 @@
                                                         </button>
                                                     </x-slot>
                                                     <x-slot  name="content">
-                                                        <x-dropdown-link :href="route('profile.edit')">
+                                                        <x-dropdown-link :href="route('borrowed.show', $borrowBook)">
                                                             {{ __('View') }}
                                                         </x-dropdown-link>
                                                         <form method="post" action="{{ route('return.book', $borrowBook) }}">
@@ -120,14 +120,24 @@
                                                         <x-dropdown-link :href="route('return.book', $borrowBook)"
                                                             onclick="event.preventDefault();
                                                             this.closest('form').submit();">
+                                                            <input type="hidden" name="status" value="returned">
                                                             {{ __('Return') }}
                                                         </x-dropdown-link>
                                                         </form>
-                                                        <x-dropdown-link :href="route('profile.edit')">
+                                                        @if($borrowBook->status == 'borrowed')
+                                                        <x-dropdown-link :href="route('request.destroy', $borrowBook)"
+                                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-borrowed-extend-{{ $borrowBook->id }}')">
+                                                            {{ __('Extend') }}
+                                                        </x-dropdown-link>
+                                                        @endif
+                                                        <x-dropdown-link :href="route('request.destroy', $borrowBook)"
+                                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-borrowed-deletion-{{ $borrowBook->id }}')">
                                                             {{ __('Delete') }}
                                                         </x-dropdown-link>
                                                         </x-slot>
                                                 </x-dropdown>
+                                                @include('borrowed.partials.extend-modal')
+                                                @include('borrowed.partials.borrowed-delete')
                                             </td>
                                         </tr>
                                     @endforeach

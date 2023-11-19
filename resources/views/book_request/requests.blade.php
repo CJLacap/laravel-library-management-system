@@ -1,5 +1,5 @@
 <x-app-layout>
-    @section('title', 'User Book Requests')
+    @section('title', 'Book Requests')
     <x-slot name="header">
         @include('book_request.partials.request-header')
     </x-slot>

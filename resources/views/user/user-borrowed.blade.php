@@ -1,7 +1,7 @@
 <x-app-layout>
     @section('title', 'Borrowed Books')
     <x-slot name="header">
-        @include('user.partials.request-header')
+        @include('user.partials.borrowed-header')
     </x-slot>
 
     <div class="py-12">
@@ -40,8 +40,10 @@
                                
                                 @foreach ($borrowBooks as $borrowBook)
                                 <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
+                                   
                                     <td class="py-4 px-6 text-center">
-                                        {{ $borrowBook->book->title }}
+                                        <a href="{{ route('user.showBook', $borrowBook->book->id) }}">
+                                            {{ $borrowBook->book->title }}</a>
                                     </td>
                                     <td class="py-4 px-6">
                                         {{ $borrowBook->book->author->name }}

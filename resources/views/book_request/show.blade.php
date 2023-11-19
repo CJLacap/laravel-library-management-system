@@ -24,35 +24,73 @@
                                         @endif
                                     </div>
                                     <div class="flex -mx-2 mb-4">
+                                        @if($bookRequest->status == 'pending')
                                         <div class="w-1/3 px-2">
-                                            <form method= "get" action="">
+                                            <form method= "post" action="{{ route('request.status.update', $bookRequest) }}">
                                                 @csrf
-                                                @method('get')
-                                                @if ($bookRequest->status == 'approved')
-                                                    <button
-                                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700">
-                                                        {{ __('Borrow') }}</button>
-                                                @else
+                                                @method('patch')
+                                                
+                                                    <input type="hidden" name="status" value="approved">
                                                     <button
                                                         class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700">
                                                         {{ __('Approve') }}</button>
-                                                @endif
                                             </form>
+                                        </div>
+                                        @endif
+
+                                        @if($bookRequest->status == 'approved')
+                                        <div class="w-1/3 px-2">
+                                        <button
+                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700"
+                                        x-data=""
+                                        x-on:click.prevent="$dispatch('open-modal', 'request-borrow-{{ $bookRequest->id }}')">
+                                        {{ __('Borrow') }}</button>
                                         </div>
                                         <div class="w-1/3 px-2">
-                                            <form method= "get" action="">
-                                                @csrf
-                                                @method('get')
-                                                <button
-                                                    class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700">
-                                                    {{ __('Deny') }}</button>
-                                            </form>
+                                            <button
+                                                class="w-full bg-red-600 text-white py-2 px-4 rounded-full font-bold hover:bg-red-700"
+                                                x-data=""
+                                                x-on:click.prevent="$dispatch('open-modal', 'status-update-override-{{ $bookRequest->id }}')">
+                                                {{ __('Deny') }}
+                                            </button>
                                         </div>
+                                        @endif
+
+
+                                        @if($bookRequest->status == 'denied' || $bookRequest->status == 'cancelled') 
+                                        <div class="w-1/2 px-2">
+                                        <button
+                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700" 
+                                        x-data=""
+                                        x-on:click.prevent="$dispatch('open-modal', 'status-update-override-{{ $bookRequest->id }}')">
+                                        {{ __('Approve') }}</button>
+                                        </div>
+                                        <div class="w-1/2 px-2">
+                                            <x-delete-button x-data=""
+                                            x-on:click.prevent="$dispatch('open-modal', 'confirm-request-deletion-{{ $bookRequest->id }}')">{{ __('Delete') }}
+                                            </x-delete-button>
+                                        </div>
+                                        @endif
+
+                                        @if($bookRequest->status == 'pending')
+                                            <div class="w-1/3 px-2">
+                                                <form method= "post" action="{{ route('request.status.update', $bookRequest) }}">
+                                                    @csrf
+                                                    @method('patch')
+                                                    <input type="hidden" name="status" value="denied">
+                                                    <button
+                                                        class="w-full bg-red-600 text-white py-2 px-4 rounded-full font-bold hover:bg-red-700">
+                                                        {{ __('Deny') }}</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                        @if($bookRequest->status != 'denied')
                                         <div class="w-1/3 px-2">
                                             <x-delete-button x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'confirm-request-deletion-{{ $bookRequest->id }}')">{{ __('Delete') }}
                                             </x-delete-button>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="md:flex-1 px-4">
@@ -134,7 +172,7 @@
                                             <span class="font-bold text-gray-500">Request Status:</span>
                                             @if($bookRequest->status == 'approved')
                                             <span class="capitalize text-blue-500">
-                                            @elseif($bookRequest->status == 'cancelled' || $bookRequest->status == 'cancelled')
+                                            @elseif($bookRequest->status == 'cancelled' || $bookRequest->status == 'denied')
                                             <span class="capitalize text-red-500">
                                             @else
                                             <span class="capitalize text-green-500">
@@ -182,6 +220,8 @@
                                 </div>
 
                             </div>
+                            @include('book_request.partials.status-update-modal')
+                            @include('book_request.partials.borrow-modal')
                             @include('book_request.partials.request-delete')
                         </div>
                     </div>
