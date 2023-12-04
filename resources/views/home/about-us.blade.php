@@ -1,4 +1,5 @@
 <x-home-layout>
+    @section('title', 'About Us | ')
     <div class="pt-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
             <div class="mt-16">

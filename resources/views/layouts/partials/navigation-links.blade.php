@@ -80,7 +80,7 @@
 
     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
         <x-nav-link :href="route('user.borrowed')" :active="request()->routeIs('user.borrowed')">
-            {{ __('Borrowed') }}
+            {{ __('Borrowed Books') }}
         </x-nav-link>
     </div>
    

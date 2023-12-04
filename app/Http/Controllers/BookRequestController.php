@@ -119,7 +119,7 @@ class BookRequestController extends Controller
     
     public function destroyRequest(Request $request, BookRequest $bookRequest){
 
-    $validated = Validator::make($request->all(), [
+        $validated = Validator::make($request->all(), [
         'password' => ['required', 'current_password']
        ]);
 

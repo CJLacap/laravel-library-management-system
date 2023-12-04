@@ -27,6 +27,9 @@
                                 <thead class=" text-gray-300 uppercase  bg-gray-700">
                                     <tr>
                                         <th scope="col" class="py-6 px-6">
+                                            ID
+                                        </th>
+                                        <th scope="col" class="py-6 px-6">
                                             First Name
                                         </th>
                                         <th scope="col" class="py-6 px-6">
@@ -47,33 +50,36 @@
                                         <th scope="col" class="py-6 px-6">
                                             Status 
                                         </th>
-                                        <th scope="col">
-                    
+                                        <th scope="col" class="py-6 px-6">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
-                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
-                                            <td class="py-4 px-6">
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white text-center">
+                                            <td class="py-4 px-6 capitalize">
+                                                {{ $user->id }}
+                                            </td>
+                                            <td class="py-4 px-6 capitalize">
                                                 {{ $user->first_name }}
                                             </td>
-                                            <td class="py-4 px-6">
+                                            <td class="py-4 px-6 capitalize">
                                                 {{ $user->last_name }}
                                             </td>
                                             <td class="py-4 px-6">
                                                 {{ $user->email }}
                                             </td>
-                                            <td class="py-4 px-6">
+                                            <td class="py-4 px-6 capitalize">
                                                 {{ $user->address }}
                                             </td>
                                             <td class="py-4 px-6">
                                                 {{ $user->phone }}
                                             </td>
-                                            <td class="py-4 px-6">
+                                            <td class="py-4 px-6 capitalize">
                                                 {{ $user->role }}
                                             </td>
-                                            <td class="py-4 px-6">
+                                            <td class="py-4 px-6 capitalize">
                                                 {{ $user->status }}
                                             </td>
                                             <td class="py-4 px-6">

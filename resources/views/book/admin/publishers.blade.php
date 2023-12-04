@@ -38,27 +38,20 @@
                                             Books
                                         </th>
                                         <th scope="col" class="py-6 px-6">
-                                            Created Date
+                                            Created At
                                         </th>
                                         <th scope="col" class="py-6 px-6">
-                                            Updated Date
+                                            Updated At
                                         </th>
-                                        <th scope="col">
-                    
-                                        </th>
-                                        <th scope="col">
-                    
-                                        </th>
-                                        <th scope="col">
-                    
+                                        <th scope="col" class="py-6 px-6">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($publishers as $publisher)
-                                    
-                                        <tr class="bg-gray-800 border-b text-sm text-white">
-                                            <td class="py-4 px-6 text-center">
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white text-center">
+                                            <td class="py-4 px-6">
                                                 {{ $publisher->id }}
                                             </td>
                                             <td class="py-4 px-6">
@@ -68,29 +61,41 @@
                                                 {{ $publisher->books_count }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $publisher->created_at->format('Y-m-d') }}
+                                                {{ $publisher->created_at->format('m/d/Y') }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $publisher->updated_at->format('Y-m-d') }}
+                                                {{ $publisher->updated_at->format('m/d/Y') }}
                                             </td>
-                                            <td class="py-2 px-3">
-                                                <a href="publishers/{{ $publisher->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">Edit</a>
+                                            <td class="py-4 px-6">
+                                                <x-dropdown align="right" width="48">
+                                                    <x-slot name="trigger">
+                                                        <button
+                                                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                            type="button">
+                                                            <svg class="w-5 h-5" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                viewBox="0 0 4 15">
+                                                                <path
+                                                                    d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <x-dropdown-link :href="route('publisher.edit', $publisher)">
+                                                            {{ __('Edit') }}
+                                                        </x-dropdown-link>
+                                                            <form method="POST" action="{{ route('publisher.destroy', $publisher) }}">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <x-dropdown-link :href="route('publisher.destroy', $publisher)"
+                                                                    onclick="event.preventDefault();
+                                                                    this.closest('form').submit();">
+                                                                    {{ __('Delete') }}
+                                                                </x-dropdown-link>
+                                                            </form>
+                                                    </x-slot>
+                                                </x-dropdown>
                                             </td>
-                                            <td class="py-2 px-3">
-                                                <a href="publishers/{{ $publisher->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">view books</a>
-                                            </td>
-                                            @if($publisher->books_count == 0)
-                                            <form class="" method="POST" action="{{ route('publisher.destroy', $publisher) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <td class="py-2 px-3">
-                                                    <x-danger-button>
-                                                        {{ __('Delete') }}
-                                                    </x-danger-button>
-                                                </div>
-                                                </td>
-                                                </form>
-                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

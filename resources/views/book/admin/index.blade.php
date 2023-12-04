@@ -67,6 +67,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 @foreach ($books as $book)
                                     <tr
                                         class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
@@ -86,8 +87,8 @@
                                             {{ $book->publication_year }}
                                         </td>
                                         <td class="py-4 px-6 text-center">
-                                            @foreach ($book->bookCategories as $category)
-                                                {{ $category->category->name }},
+                                            @foreach ($book->bookCategories->take(1) as $category)
+                                                {{ $category->category->name }}
                                             @endforeach
                                         </td>
                                         <td class="py-4 px-6 text-center">
@@ -138,7 +139,12 @@
                                 @endforeach
                             </tbody>
                         </table>
-                       
+                        
+                        @if($books->count() == 0)
+                            <div class="text-center text-lg mt-4">
+                                <p>No Book Found</p>
+                            </div>
+                        @endif
                         <div class="mx-auto max-w-lg pt-6 p-4">
                             {{ $books->Links() }}
                         </div>

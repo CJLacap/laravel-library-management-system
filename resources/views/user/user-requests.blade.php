@@ -41,16 +41,18 @@
                                 @foreach ($bookRequests as $bookRequest)
                                 <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
                                     <td class="py-4 px-6 text-center">
-                                        {{ $bookRequest->book->title }}
+                                        <a href="{{ route('user.showBook', $bookRequest->book->id) }}">
+                                            {{ $bookRequest->book->title }}
+                                        </a>
                                     </td>
                                     <td class="py-4 px-6">
                                         {{ $bookRequest->book->author->name }}
                                     </td>
-                                    <td class="py-4 px-6">
-                                        {{ $bookRequest->created_at->format('M-d-Y') }}
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        {{ $bookRequest->created_at->format('M d, Y') }}
                                     </td>
-                                    <td class="py-4 px-6">
-                                        {{ $bookRequest->updated_at->format('M-d-Y') }}
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        {{ $bookRequest->updated_at->format('M d, Y') }}
                                     </td>
                                     <td class="py-4 px-6 capitalize">
                                         {{ $bookRequest->status }}
@@ -86,7 +88,7 @@
                         </table>
                         @if($bookRequests->count() == 0)
                             <div class="text-center text-lg mt-4">
-                                <p>No Result Found</p>
+                                <p>No Request Found</p>
                             </div>
                         @endif
                         

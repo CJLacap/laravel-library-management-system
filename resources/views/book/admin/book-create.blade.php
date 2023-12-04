@@ -95,6 +95,30 @@
                                 <x-text-input id="copies" name="copies" type="text" class="mt-1 block w-full" :value="old('copies')" autofocus autocomplete="copies" />
                                 <x-input-error class="mt-2" :messages="$errors->get('copies')" />
                             </div>
+
+                            <!-- Book Call Number -->
+                            <div>
+                                <x-input-label for="call_number" :value="__('Call Number')" />
+                                <x-text-input id="call_number" name="call_number" type="text"
+                                    class="mt-1 block w-full" :value="old('call_number')"  autofocus />
+                                <x-input-error class="mt-2" :messages="$errors->get('call_number')" />
+                            </div>
+
+                            <!-- Book Floor Number -->
+                            <div>
+                                <x-input-label for="floor" :value="__('Floor Number')" />
+                                <x-text-input id="floor" name="floor" type="text"
+                                    class="mt-1 block w-full" :value="old('floor')"  autofocus />
+                                <x-input-error class="mt-2" :messages="$errors->get('floor')" />
+                            </div>
+
+                            <!-- Book Shelf Number -->
+                            <div>
+                                <x-input-label for="shelf" :value="__('Shelf Number')" />
+                                <x-text-input id="shelf" name="shelf" type="text"
+                                    class="mt-1 block w-full" :value="old('shelf')"  autofocus />
+                                <x-input-error class="mt-2" :messages="$errors->get('shelf')" />
+                            </div>
                             
                             <div class="flex items-center gap-4">
                                 <x-primary-button>{{ __('Create') }}</x-primary-button>

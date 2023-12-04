@@ -18,18 +18,12 @@
                     <input type="search" id="search" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Category" required>
                     <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
-                
-                @if(session()->has('message'))
-                    <div class="mt-4 text-red-600">
-                     {{ session()->get('message') }}
-                    </div>
-                @endif
             </form>
             @include('layouts.partials.message-status')
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flow-root">
-                        <a href="{{ route('category.create') }}" class="float-right  bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">Add new category</a>
+                        <a href="{{ route('category.create') }}" class="float-right  bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded">Add new category</a>
                     </div>
                         <div class="max-w-10xl overflow-x-auto relative">
                             <table class="mx-auto  text-gray-500">
@@ -42,48 +36,62 @@
                                             Name
                                         </th>
                                         <th scope="col" class="py-6 px-6">
-                                            Created Date
+                                            Created At
                                         </th>
                                         <th scope="col" class="py-6 px-6">
-                                            Updated Date
+                                            Updated At
                                         </th>
-                                        <th scope="col">
-                    
-                                        </th>
-                                        <th scope="col">
-                    
+                                        <th scope="col" class="py-6 px-6">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($categories as $category)
                                     
-                                        <tr class="bg-gray-800 border-b text-sm text-white">
-                                            <td class="py-4 px-6 text-center">
+                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white text-center capitalize">
+                                            <td class="py-4 px-6 ">
                                                 {{ $category->id }}
                                             </td>
                                             <td class="py-4 px-6">
                                                 {{ $category->name }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $category->created_at->diffForHumans() }}
+                                                {{ $category->created_at->format('m/d/Y') }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{ $category->updated_at->diffForHumans() }}
+                                                {{ $category->updated_at->format('m/d/Y') }}
                                             </td>
-                                            <td class="py-2 px-3">
-                                                <a href="categories/{{ $category->id }}" class="bg-sky-600 text-white px-4 py-2 rounded">Edit</a>
+                                            <td class="py-4 px-6">
+                                                <x-dropdown align="right" width="48">
+                                                    <x-slot name="trigger">
+                                                        <button
+                                                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                            type="button">
+                                                            <svg class="w-5 h-5" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                viewBox="0 0 4 15">
+                                                                <path
+                                                                    d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <x-dropdown-link :href="route('category.edit', $category)">
+                                                            {{ __('Edit') }}
+                                                        </x-dropdown-link>
+                                                        <form method="POST" action="{{ route('category.destroy', $category) }}">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <x-dropdown-link :href="route('category.destroy', $category)"
+                                                                onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                                                    {{ __('Delete') }}
+                                                            </x-dropdown-link>
+                                                        </form>
+                                                    </x-slot>
+                                                </x-dropdown>
                                             </td>
-                                                                                   
-                                            <form class="" method="POST" action="{{ route('category.destroy', $category) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <td class="py-2 px-3">
-                                                <x-danger-button>
-                                                    {{ __('Delete') }}
-                                                </x-danger-button>
-                                            </td>
-                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>

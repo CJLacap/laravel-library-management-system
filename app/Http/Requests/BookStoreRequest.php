@@ -30,6 +30,9 @@ class BookStoreRequest extends FormRequest
             'publication_year',
             'category',
             'copies',
+            'call_number',
+            'floor',
+            'shelf',
         ];
     }
 }

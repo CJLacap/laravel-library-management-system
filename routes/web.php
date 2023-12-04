@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(UserController::class)->group(function () {
+Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'homeIndex')->name('home');
     Route::get('/Browse Books', 'homeBooks')->name('home.books');
     Route::get('/About Us', 'aboutUs')->name('home.aboutUs');
-    Route::get('/Contact', 'contactUs')->name('home.contactUs');
+    Route::get('/Contact Us', 'contactUs')->name('home.contactUs');
     Route::get('/Browse Books/{book}', 'homeBookShow')->name('home.book.show');
+
+    Route::post('/Contact Us', 'contactSubmit')->name('home.contactUs.submit');
   
 });
 
@@ -58,6 +60,9 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::patch('/user/status/{user}', [AdminController::class, 'updateUserStatus'])->name('user.status');
     Route::delete('/user/{user}', [AdminController::class, 'destroyUser'])->name('user.destroy');
 
+    Route::get('/admin/messages',[AdminController::class, 'adminMessages'])->name('admin.messages');
+    Route::get('/admin/messages/{message}',[AdminController::class, 'showAdminMessage'])->name('admin.message.show');
+    Route::delete('/admin/messages/{message}',[AdminController::class, 'destroyMessage'])->name('admin.message.destroy');
     
 
 }); // End Group Admin Middleware
@@ -102,7 +107,7 @@ Route::middleware(['auth','role:admin,librarian'])->group(function(){
     Route::get('/book/{book}', [BookController::class, 'showBook'])->name('book.show');
     Route::get('/book/edit/{book}', [BookController::class, 'editBook'])->name('book.edit');
     Route::post('/book/create', [BookController::class, 'storeBook'])->name('book.store');
-    Route::patch('/book/{book}', [BookController::class, 'updateBook'])->name('book.update');
+    Route::patch('/book/edit/{book}/', [BookController::class, 'updateBook'])->name('book.update');
     Route::patch('/book/cover/{book}', [BookController::class, 'updateCover'])->name('book.cover');
     Route::delete('/book/{book}', [BookController::class, 'destroybook'])->name('book.destroy');
     Route::get('/book/bookCategory/{bookCategory}', [BookController::class, 'bookCategoryDestroy'])->name('bookCategory.destroy');

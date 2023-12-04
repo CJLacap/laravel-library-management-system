@@ -87,13 +87,13 @@
                                                 {{ $borrowBook->librarian->first_name }} 
                                                 {{ $borrowBook->librarian->last_name }} 
                                             </td>
-                                            <td class="py-4 px-6 text-center">
+                                            <td class="py-4 px-6 text-center whitespace-nowrap">
                                                 {{ $borrowBook->created_at->format('M d, Y') }}
                                             </td>
-                                            <td class="py-4 px-6 text-center">
+                                            <td class="py-4 px-6 text-center whitespace-nowrap">
                                                 {{ $borrowBook->due_at->format('M d, Y') }} 
                                             </td>
-                                            <td class="py-4 px-6 text-center">
+                                            <td class="py-4 px-6 text-center whitespace-nowrap">
                                                 @if($borrowBook->returned_at != null)
                                                 {{ $borrowBook->returned_at->format('M d, Y') }}
                                                 @endif 
@@ -149,7 +149,7 @@
                                 </div>
                             @endif
                             <div class="mx-auto max-w-lg pt-6 p-4">
-                                
+                                {{ $borrowBooks->Links() }}     
                             </div>
                         </div>
                     </div>

@@ -80,7 +80,7 @@
                             </div>
 
                             <div>
-                                <x-input-label :value="__('Status')" class="mb-2" />
+                                <x-input-label for="status ":value="__('Status')" class="mb-2" />
                                 <input type="radio" id="active" name="status" value="active"
                                     {{ $user->status == 'active' ? 'checked' : '' }} @readonly(true)/> 
                                     <label for="active">Active</label>

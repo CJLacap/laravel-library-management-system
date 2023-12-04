@@ -31,6 +31,9 @@ class BookUpdateRequest extends FormRequest
             'category',
             'copies',
             'status',
+            'call_number',
+            'floor',
+            'shelf',
         ];
     }
 }

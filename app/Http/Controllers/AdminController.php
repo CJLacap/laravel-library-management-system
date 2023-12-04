@@ -9,11 +9,13 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\BorrowBook;
+use App\Models\ContactUs;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -30,10 +32,45 @@ class AdminController extends Controller
                             ->where('created_at', '<', Carbon::now()->endOfWeek())->get();
         $weekDueBooks = BorrowBook::where('due_at', '>', Carbon::now()->startOfWeek())
                             ->where('due_at', '<', Carbon::now()->endOfWeek())->get();
+        $weekMessages = ContactUs::where('created_at', '>', Carbon::now()->startOfWeek())
+                            ->where('created_at', '<', Carbon::now()->endOfWeek())->get();
    
-        return view('admin.index', compact('books','borrowBooks', 'bookRequests','users','weekBookRequests','weekDueBooks'));
+        return view('admin.index', compact('books','borrowBooks', 'bookRequests','users','weekBookRequests','weekDueBooks','weekMessages'));
     }
 
+     /**
+     * Display Contacts Us Messages
+     */
+    public function adminMessages(){
+        $messages = ContactUs::orderBy('created_at','desc')->paginate(10);
+        return view('admin.messages', compact('messages'));
+    }
+
+    /**
+     * Display Contacts Us Selected Message
+     */
+    public function showAdminMessage(ContactUs $message){
+        return view('admin.message-show', compact('message'));
+    }
+
+    /**
+     * Destroy Contacts Us Selected Message
+     */
+    public function destroyMessage(Request $request, ContactUs $message){
+        
+        $validated = Validator::make($request->all(), [
+            'password' => ['required', 'current_password']
+           ]);
+    
+           if($validated->fails()){
+           
+            return Redirect::back()->with('mid', "$message->id")->withErrors($validated);
+            
+           }else{
+                $message->delete();
+                return Redirect::back()->with('status', 'Message Deleted Successfully');
+           }
+    }
 
     /**
      * Display All Librarian Accounts & Search Result 

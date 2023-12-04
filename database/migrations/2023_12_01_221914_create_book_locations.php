@@ -12,11 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('book_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('call_number')->nullable();
+            $table->string('floor')->nullable();
+            $table->string('shelf')->nullable();
             $table->timestamps();
-        
         });
     }
 
@@ -26,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('book_locations');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 };

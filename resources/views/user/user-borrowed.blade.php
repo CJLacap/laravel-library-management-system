@@ -20,10 +20,13 @@
                                         Author
                                     </th>
                                     <th scope="col" class="py-6 px-6">
-                                        Created At
+                                        Borrowed At
                                     </th>
                                     <th scope="col">
-                                        Updated At
+                                        Due At
+                                    </th>
+                                    <th scope="col">
+                                        Returned At
                                     </th>
                                     <th scope="col" class="py-6 px-6">
                                         Status
@@ -48,12 +51,18 @@
                                     <td class="py-4 px-6">
                                         {{ $borrowBook->book->author->name }}
                                     </td>
-                                    <td class="py-4 px-6">
-                                        {{ $borrowBook->created_at->format('M-d-Y') }}
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        {{ $borrowBook->created_at->format('M d, Y') }}
                                     </td>
-                                    <td class="py-4 px-6">
-                                        {{ $borrowBook->updated_at->format('M-d-Y') }}
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        {{ $borrowBook->due_at->format('M d, Y') }}
                                     </td>
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        @if($borrowBook->returned_at != null)
+                                         {{ $borrowBook->returned_at->format('M d, Y') }}
+                                        @endif
+                                    </td>
+
                                     <td class="py-4 px-6 capitalize">
                                         {{ $borrowBook->status }}
                                     </td>
@@ -88,7 +97,7 @@
                         </table>
                         @if($borrowBooks->count() == 0)
                             <div class="text-center text-lg mt-4">
-                                <p>No Result Found</p>
+                                <p>No Borrowed Books Found</p>
                         @endif
                         </div>
                         <div class="mx-auto max-w-lg pt-6 p-4">

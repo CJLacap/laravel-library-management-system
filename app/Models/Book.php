@@ -27,6 +27,10 @@ class Book extends Model
         return $this->hasMany(BorrowBook::class)->where('status', 'borrowed');
     }
 
+    public function bookLocations(): HasMany{
+        return $this->hasMany(BookLocation::class);
+    }
+
     
 
 

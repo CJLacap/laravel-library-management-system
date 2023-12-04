@@ -7,6 +7,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class=" text-gray-900 dark:text-gray-100">
+                <h3 class="text-white">Search Books</h3>
                 <form method="get" action="" class="py-6">
                     @csrf
                     @method('get')
@@ -59,8 +60,6 @@
                                     <div class="p-4">
                                         <h2 class="text-xl text-gray-600 font-bold mb-2">{{ $book->title }}</h2>
                                         <p class="text-gray-700 text-md mb-2">Author: <span class="text-gray-700 font-bold">{{ $book->author->name }}</span> </p>
-                                        <p class="text-gray-700 text-sm mb-2">Availability: {{ $book->author->name }}</p>
-                                        
                                     </div>
                                 </div>
                 

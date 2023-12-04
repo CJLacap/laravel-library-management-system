@@ -45,7 +45,7 @@
                         <h2 class="text-3xl font-bold mb-4">Get Started Today</h2>
                         <p class="text-lg mb-6">Join us in revolutionizing library management. Sign up now and
                             experience the difference.</p>
-                        <a href="#" class="bg-white text-blue-500 px-6 py-3 rounded-full hover:bg-gray-100">Sign
+                        <a href="{{ route('register') }}" class="bg-white text-blue-500 px-6 py-3 rounded-full hover:bg-gray-100">Sign
                             Up</a>
                     </div>
                 </section>

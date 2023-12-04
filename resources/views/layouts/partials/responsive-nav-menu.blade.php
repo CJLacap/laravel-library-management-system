@@ -58,6 +58,21 @@
             {{ __('Dashboard') }}
         </x-responsive-nav-link >
     </div>
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link  :href="route('user.books')" :active="request()->routeIs('user.books')">
+            {{ __('Books') }}
+        </x-responsive-nav-link >
+    </div>
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link  :href="route('user.requests')" :active="request()->routeIs('user.requests')">
+            {{ __('Requests') }}
+        </x-responsive-nav-link >
+    </div>
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link  :href="route('user.borrowed')" :active="request()->routeIs('user.borrowed')">
+            {{ __('Borrowed Books') }}
+        </x-responsive-nav-link >
+    </div>
 @endif
 
 

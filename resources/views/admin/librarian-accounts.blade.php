@@ -58,36 +58,36 @@
                                     <th scope="col" class="py-6 px-6">
                                         Status
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="py-6 px-6">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($librarians as $librarian)
-                                    <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
+                                    <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white ">
                                         <td class="py-4 px-6">
                                             {{ $librarian->id }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 capitalize">
                                             {{ $librarian->first_name }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 capitalize">
                                             {{ $librarian->last_name }}
                                         </td>
                                         <td class="py-4 px-6">
                                             {{ $librarian->email }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 capitalize">
                                             {{ $librarian->address }}
                                         </td>
                                         <td class="py-4 px-6">
                                             {{ $librarian->phone }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 capitalize">
                                             {{ $librarian->role }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 capitalize">
                                             {{ $librarian->status }}
                                         </td>
                                         <td class="py-4 px-6">

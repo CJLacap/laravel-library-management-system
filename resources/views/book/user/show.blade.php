@@ -85,17 +85,23 @@
                                         <div class="mb-4 mr-4">
                                             <label
                                                 class="block text-gray-400 text-sm font-semibold mb-2">Availability:</label>
-                                            <p class="text-gray-200">{{ $book->status }}</p>
+                                            <p class="text-gray-200">
+                                                @if($book->copies - $book->borrowBooks->count() == 0)
+                                                    Borrowed
+                                                @else
+                                                    {{ $book->status }}
+                                                @endif
+                                            </p>
                                         </div>
 
                                     </div>
                                     @if ($book->bookCategories->isNotEmpty())
                                         <div class="mb-4">
                                             <span class="font-bold text-gray-500">Book Categories:</span>
-                                            <div class="flex items-center mt-2">
+                                            <div class="flex flex-wrap items-center mt-2">
                                                 @foreach ($book->bookCategories as $bookCategory)
                                                     <button
-                                                        class="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">{{ $bookCategory->category->name }}</button>
+                                                        class="bg-gray-300 text-sm text-gray-700 py-2 px-2 mb-2 rounded-md font-bold mr-2 hover:bg-gray-400">{{ $bookCategory->category->name }}</button>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -103,22 +109,24 @@
                                     <div>
                                         <span class="font-bold text-xl text-gray-200 ">Book Location</span>
                                         <div class="flex justify-start mt-2 ">
+                                            @foreach ($book->bookLocations as $bookLocation)
                                             <div class="mb-4 mr-4">
                                                 <label class="block text-gray-400 text-sm font-semibold mb-2">Call
                                                     Number:</label>
-                                                <p class="text-gray-200 text-center">{{ $book->copies }}</p>
+                                                <p class="text-gray-200 text-center">{{ $bookLocation->call_number }}</p>
                                             </div>
 
                                             <div class="mb-4 mr-4">
                                                 <label class="block text-gray-400 text-sm font-semibold mb-2">Floor
                                                     Number :</label>
-                                                <p class="text-gray-200 text-center">{{ $book->copies }}</p>
+                                                <p class="text-gray-200 text-center">{{ $bookLocation->floor }}</p>
                                             </div>
                                             <div class="mb-4 mr-4">
                                                 <label class="block text-gray-400 text-sm font-semibold mb-2">Shelf
                                                     Number :</label>
-                                                <p class="text-gray-200 text-center">{{ $book->copies }}</p>
+                                                <p class="text-gray-200 text-center">{{ $bookLocation->shelf }}</p>
                                             </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
