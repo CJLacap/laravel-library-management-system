@@ -24,7 +24,7 @@
                 {{ $slot }}
             </main>
               <!-- Footer Section -->
-              <footer class="bg-transparent text-white p-4 text-center">
+              <footer class="bg-transparent  dark:text-white p-4 text-center">
                 <p>&copy; 2023 LM<span class="text-sky-500">&</span>RS. All rights reserved.</p>
             </footer>
         </div>

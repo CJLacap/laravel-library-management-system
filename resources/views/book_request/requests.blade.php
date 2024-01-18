@@ -6,7 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
-            <h3 class="text-white">Search Requests</h3>
+            <h3 class="dark:text-white">Search Requests</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get')
@@ -26,11 +26,11 @@
                 </div>
             </form>
             @include('layouts.partials.message-status')
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">    
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="max-w-10xl overflow-x-auto relative">
-                            <table class="mx-auto text-gray-500">
+                            <table class="mx-auto">
                                 <thead class="text-gray-300 uppercase bg-gray-700">
                                     <tr>
                                         <th scope="col" class="py-6 px-6">
@@ -70,7 +70,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($bookRequests as $bookRequest)
-                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
+                                    <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white capitalize">
                                             <td class="py-4 px-6 text-center">
                                                 {{ $bookRequest->id }}
                                             </td>
@@ -110,7 +110,7 @@
                                                 @include('book_request.partials.request-delete')
                                                 @include('book_request.partials.status-update-modal')
                                                 @include('book_request.partials.borrow-modal')
-                                             
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -122,11 +122,11 @@
                             </div>
                             @endif
                             <div class="mx-auto max-w-lg pt-6 p-4">
-                                {{ $bookRequests->Links() }}     
+                                {{ $bookRequests->Links() }}
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
     </div>

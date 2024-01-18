@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="max-w-10xl overflow-x-auto relative">
-                        <table class="mx-auto  text-gray-500">
+                        <table class="mx-auto">
                             <thead class=" text-gray-300 uppercase bg-gray-700">
                                 <tr>
                                     <th scope="col" class="py-6 px-6">
@@ -37,9 +37,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 @foreach ($bookRequests as $bookRequest)
-                                <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white">
+                                <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white">
                                     <td class="py-4 px-6 text-center">
                                         <a href="{{ route('user.showBook', $bookRequest->book->id) }}">
                                             {{ $bookRequest->book->title }}
@@ -91,14 +91,14 @@
                                 <p>No Request Found</p>
                             </div>
                         @endif
-                        
+
                         <div class="mx-auto max-w-lg pt-6 p-4">
                             {{ $bookRequests->Links() }}
                         </div>
-                    </div>            
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </x-app-layout>

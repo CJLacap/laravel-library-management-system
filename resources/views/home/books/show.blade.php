@@ -16,7 +16,7 @@
                                                     src="{{ asset('storage/book_cover/' . $book->cover) }}"
                                                     alt="Book Image">
                                             @else
-                                                <img class="w-full h-full object-fill"
+                                                <img class="w-full h-full object-fill shadow-lg"
                                                     src="{{ asset('storage/book_cover/no_image.jpg') }}"
                                                     alt="Book Image">
                                             @endif
@@ -41,32 +41,32 @@
                                     <div class="md:flex-1 px-4 capitalize">
                                         <!-- Book Information -->
                                         <div class="mb-4">
-                                            <label class="block text-gray-400 text-sm font-semibold mb-2">Title:</label>
-                                            <p class="text-gray-200">{{ $book->title }}</p>
+                                            <label class="block dark:text-gray-400 text-sm font-semibold mb-2">Title:</label>
+                                            <p class="dark:text-gray-200">{{ $book->title }}</p>
                                         </div>
 
                                         <div class="mb-4">
                                             <label
-                                                class="block text-gray-400 text-sm font-semibold mb-2">Author:</label>
-                                            <p class="text-gray-200">F. Scott Fitzgerald</p>
+                                                class="block dark:text-gray-400 text-sm font-semibold mb-2">Author:</label>
+                                            <p class="dark:text-gray-200">F. Scott Fitzgerald</p>
                                         </div>
 
 
                                         <div class="mb-4 mr-4">
-                                            <label class="block text-gray-400 text-sm font-semibold mb-2">Published
+                                            <label class="block dark:text-gray-400 text-sm font-semibold mb-2">Published
                                                 Year:</label>
-                                            <p class="text-gray-200">{{ $book->publication_year }}</p>
+                                            <p class="dark:text-gray-200">{{ $book->publication_year }}</p>
                                         </div>
 
                                         <div class="mb-4 mr-4">
                                             <label
-                                                class="block text-gray-400 text-sm font-semibold mb-2">Publisher:</label>
-                                            <p class="text-gray-200">{{ $book->publisher->name }}</p>
+                                                class="block dark:text-gray-400 text-sm font-semibold mb-2">Publisher:</label>
+                                            <p class="dark:text-gray-200">{{ $book->publisher->name }}</p>
                                         </div>
 
                                         <div class="mb-4 mr-4">
-                                            <label class="block text-gray-400 text-sm font-semibold mb-2">ISBN:</label>
-                                            <p class="text-gray-200">{{ $book->isbn }}</p>
+                                            <label class="block dark:text-gray-400 text-sm font-semibold mb-2">ISBN:</label>
+                                            <p class="dark:text-gray-200">{{ $book->isbn }}</p>
                                         </div>
 
 
@@ -74,14 +74,14 @@
                                         <div class="flex justify-start ">
                                             <div class="mb-4 mr-4">
                                                 <label
-                                                    class="block text-gray-400 text-sm font-semibold mb-2">Copies:</label>
-                                                <p class="text-gray-200">{{ $book->copies }}</p>
+                                                    class="block dark:text-gray-400 text-sm font-semibold mb-2">Copies:</label>
+                                                <p class="dark:text-gray-200">{{ $book->copies }}</p>
                                             </div>
 
                                             <div class="mb-4 mr-4">
                                                 <label
-                                                    class="block text-gray-400 text-sm font-semibold mb-2">Availability:</label>
-                                                <p class="text-gray-200">
+                                                    class="block dark:text-gray-400 text-sm font-semibold mb-2">Availability:</label>
+                                                <p class="dark:text-gray-200">
                                                     @if($book->copies - $book->borrowBooks->count() == 0)
                                                         Borrowed
                                                     @else
@@ -93,7 +93,7 @@
                                         </div>
                                         @if ($book->bookCategories->isNotEmpty())
                                             <div class="mb-4">
-                                                <span class="font-bold text-gray-500">Book Categories:</span>
+                                                <span class="font-bold dark:text-gray-400">Book Categories:</span>
                                                 <div class="flex flex-wrap items-center mt-2">
                                                     @foreach ($book->bookCategories as $bookCategory)
                                                         <button
@@ -103,24 +103,24 @@
                                             </div>
                                         @endif
                                         <div>
-                                            <span class="font-bold text-xl text-gray-200 ">Book Location</span>
+                                            <span class="font-bold text-xl dark:text-gray-400 ">Book Location</span>
                                             <div class="flex justify-start mt-2 ">
                                                 @foreach ($book->bookLocations as $bookLocation)
                                                 <div class="mb-4 mr-4">
-                                                    <label class="block text-gray-400 text-sm font-semibold mb-2">Call
+                                                    <label class="block dark:text-gray-400 text-sm font-semibold mb-2">Call
                                                         Number:</label>
-                                                    <p class="text-gray-200 text-center">{{ $bookLocation->call_number }}</p>
+                                                    <p class="dark:text-gray-200 text-center">{{ $bookLocation->call_number }}</p>
                                                 </div>
 
                                                 <div class="mb-4 mr-4">
-                                                    <label class="block text-gray-400 text-sm font-semibold mb-2">Floor
+                                                    <label class="block dark:text-gray-400 text-sm font-semibold mb-2">Floor
                                                         Number :</label>
-                                                    <p class="text-gray-200 text-center">{{ $bookLocation->floor }}</p>
+                                                    <p class="dark:text-gray-200 text-center">{{ $bookLocation->floor }}</p>
                                                 </div>
                                                 <div class="mb-4 mr-4">
-                                                    <label class="block text-gray-400 text-sm font-semibold mb-2">Shelf
+                                                    <label class="block dark:text-gray-400 text-sm font-semibold mb-2">Shelf
                                                         Number :</label>
-                                                    <p class="text-gray-200 text-center">{{ $bookLocation->shelf }}</p>
+                                                    <p class="dark:text-gray-200 text-center">{{ $bookLocation->shelf }}</p>
                                                 </div>
                                                 @endforeach
                                             </div>

@@ -6,7 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
-            <h3 class="text-white">Search Books</h3>
+            <h3 class="dark:text-white">Search Books</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get')
@@ -31,7 +31,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="max-w-10xl overflow-x-auto relative">
-                        <table class="mx-auto  text-gray-500">
+                        <table class="mx-auto">
                             <thead class=" text-gray-300 uppercase bg-gray-700">
                                 <tr>
                                     <th scope="col" class="py-6 px-6">
@@ -67,10 +67,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach ($books as $book)
-                                    <tr
-                                        class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white capitalize">
+                                <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white capitalize">
                                         <td class="py-4 px-6 text-center">
                                             {{ $book->id }}
                                         </td>
@@ -107,7 +106,7 @@
                                         <td class="py-2 px-6">
                                             <x-dropdown align="right" width="48">
                                                 <x-slot name="trigger">
-                                                    <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
+                                                    <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                                         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
                                                         <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                                         </svg>
@@ -124,8 +123,8 @@
                                                     x-on:click.prevent="$dispatch('open-modal', 'book-borrow-{{ $book->id }}')">
                                                         {{ __('Borrow') }}
                                                     </x-dropdown-link>
-                                                    
-                                                    
+
+
                                                     <x-dropdown-link :href="route('book.destroy', $book)"
                                                         x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion-{{ $book->id }}')">
                                                         {{ __('Delete') }}
@@ -139,7 +138,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        
+
                         @if($books->count() == 0)
                             <div class="text-center text-lg mt-4">
                                 <p>No Book Found</p>

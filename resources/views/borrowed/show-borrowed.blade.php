@@ -39,7 +39,7 @@
                                             <button
                                                 class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700"
                                                 x-data=""
-                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-borrowed-extend-{{ $borrowBook->id }}')">   
+                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-borrowed-extend-{{ $borrowBook->id }}')">
                                                 {{ __('Extend Due Date') }}
                                             </button>
                                         </div>
@@ -56,25 +56,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="md:flex-1 px-4">
-                                    <h2 class="text-2xl font-bold text-slate-300 mb-2">{{ $borrowBook->book->title }}
+                                <div class="md:flex-1 px-4 text-black dark:text-gray-300">
+                                    <h2 class="text-2xl font-bold dark:text-slate-300 mb-2">{{ $borrowBook->book->title }}
                                     </h2>
                                     <span class="font-bold text-gray-500">Author:</span>
-                                    <span class="text-gray-300 mb-4">{{ $borrowBook->book->author->name }}</span>
+                                    <span class=" mb-4">{{ $borrowBook->book->author->name }}</span>
                                     <div class="flex my-4">
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500">Copies:</span>
                                             <span
-                                                class="text-gray-300 capitalize">{{ $borrowBook->book->copies }}</span>
+                                                class=" capitalize">{{ $borrowBook->book->copies }}</span>
                                         </div>
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500 ">On Hand:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 {{ $borrowBook->book->copies - $borrowBook->book->borrowBooks->count() }}</span>
                                         </div>
                                         <div>
                                             <span class="font-bold text-gray-500 ">Book Status:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 @if ($borrowBook->book->copies - $borrowBook->book->borrowBooks->count() == 0)
                                                     Borrowed
                                                 @else
@@ -87,48 +87,46 @@
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500">Publisher:</span>
                                             <span
-                                                class="text-gray-300 capitalize">{{ $borrowBook->book->publisher->name }}</span>
+                                                class=" capitalize">{{ $borrowBook->book->publisher->name }}</span>
                                         </div>
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500 ">Publication Year:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 {{ $borrowBook->book->publication_year }}</span>
                                         </div>
                                         <div>
                                             <span class="font-bold text-gray-500 ">ISBN:</span>
-                                            <span class="text-gray-300 capitalize">{{ $borrowBook->book->isbn }}
+                                            <span class=" capitalize">{{ $borrowBook->book->isbn }}
                                             </span>
                                         </div>
                                     </div>
                                     <div class="my-5">
-                                        <p class="text-2xl font-bold text-slate-300">Borrower & Borrowed Book Status</p>
+                                        <p class="text-2xl font-bold dark:text-slate-300">Borrower & Borrowed Book Status</p>
                                         <div class="flex my-4">
                                             <div class="mr-3 my-1">
                                                 <span class="font-bold text-gray-500">Name:</span>
-                                                <span class="text-gray-300 capitalize">
+                                                <span class=" capitalize">
                                                     {{ $borrowBook->user->first_name }}
                                                     {{ $borrowBook->user->last_name }}
                                                 </span>
                                             </div>
                                             <div class="mr-3 my-1">
                                                 <span class="font-bold text-gray-500">Phone:</span>
-                                                <span class="text-gray-300">{{ $borrowBook->user->phone }}</span>
+                                                <span>{{ $borrowBook->user->phone }}</span>
                                             </div>
                                             <div class="mr-3 my-1">
                                                 <span class="font-bold text-gray-500">Email:</span>
-                                                <span class="text-gray-300 ">{{ $borrowBook->user->email }}</span>
+                                                <span>{{ $borrowBook->user->email }}</span>
                                             </div>
                                         </div>
                                         <div class="flex my-3">
                                             <div class="mr-3 my-1">
                                                 <span class="font-bold text-gray-500">Borrowed At: </span>
-                                                <span
-                                                    class="text-gray-300 capitalize">{{ $borrowBook->created_at->format('M d, Y h:m a') }}</span>
+                                                <span>{{ $borrowBook->created_at->format('M d, Y h:m A') }}</span>
                                             </div>
                                             <div class="mr-3 my-1">
                                                 <span class="font-bold text-gray-500">Due At:</span>
-                                                <span
-                                                    class="text-gray-300">{{ $borrowBook->due_at->format('M d, Y h:m a') }}</span>
+                                                <span>{{ $borrowBook->due_at->format('M d, Y h:m A') }}</span>
                                             </div>
                                         </div>
                                         <div class="flex my-4 mr-3 mt-3">
@@ -153,21 +151,21 @@
                                     </div>
 
                                     <div class="my-5">
-                                        <p class="text-2xl font-bold text-slate-300">Librarian Information</p>
+                                        <p class="text-2xl font-bold dark:text-slate-300">Librarian Information</p>
                                         <div class="mr-3 mt-3">
                                             @if($borrowBook->status =='returned')
                                             <span class="font-bold text-gray-500">Returned To:</span>
                                             @else
                                             <span class="font-bold text-gray-500">Borrowed From:</span>
                                             @endif
-                                            <span class="text-gray-300 capitalize">
+                                            <span class="capitalize">
                                                 {{ $borrowBook->librarian->first_name }}
                                                 {{ $borrowBook->librarian->last_name }}
                                             </span>
                                         </div>
                                         <div class="mr-3 mt-3">
                                             <span class="font-bold text-gray-500">Remarks:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class="capitalize">
                                                 {{ $borrowBook->remarks }}
                                             </span>
                                             <form method="post" action="{{ route('return.book', $borrowBook) }}">
@@ -183,7 +181,7 @@
                                                     <x-input-error class="mt-2" :messages="$errors->get('remarks')" />
                                                 </div>
                                             </form>
-                
+
                                         </div>
 
                                     </div>

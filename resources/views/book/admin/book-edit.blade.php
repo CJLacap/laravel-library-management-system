@@ -32,7 +32,7 @@
                                     class="mt-1 block w-full p-4 pl-4 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none "
                                     :value="old('cover')" autofocus autocomplete="cover" required />
                                 <button type="submit"
-                                    class="absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
+                                    class="absolute right-2.5 bottom-2.5 bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
                             </div>
                             <x-input-error class="mt-2" :messages="$errors->get('cover')" />
                         </form>
@@ -126,7 +126,7 @@
                                 <x-input-label class="mb-2" :value="__('Book Category')" />
                                 <div class="flex flex-wrap items-center">
                                     @foreach ($book->bookCategories as $bookCategory)
-                                        <a class="mt-2 mx-1 p-2 text-sm bg-blue-500 whitespace-nowrap no-underline hover:underline rounded hover:bg-red-800"
+                                        <a class="mt-2 mx-1 p-2 text-sm text-white bg-blue-500 whitespace-nowrap no-underline hover:underline rounded hover:bg-red-800"
                                             href="{{ route('bookCategory.destroy', $bookCategory) }}">
                                             {{ $bookCategory->category->name }}
                                         </a>

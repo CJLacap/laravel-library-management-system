@@ -6,7 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
-            <h3 class="text-white">Search Category</h3>
+            <h3 class="dark:text-white">Search Category</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 @method('get')
@@ -26,7 +26,7 @@
                         <a href="{{ route('category.create') }}" class="float-right  bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded">Add new category</a>
                     </div>
                         <div class="max-w-10xl overflow-x-auto relative">
-                            <table class="mx-auto  text-gray-500">
+                            <table class="mx-auto">
                                 <thead class=" text-gray-300 uppercase bg-gray-700">
                                     <tr>
                                         <th scope="col" class="py-6 px-6">
@@ -48,8 +48,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($categories as $category)
-                                    
-                                        <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white text-center capitalize">
+                                    <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white text-center capitalize">
                                             <td class="py-4 px-6 ">
                                                 {{ $category->id }}
                                             </td>
@@ -66,7 +65,7 @@
                                                 <x-dropdown align="right" width="48">
                                                     <x-slot name="trigger">
                                                         <button
-                                                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                                             type="button">
                                                             <svg class="w-5 h-5" aria-hidden="true"
                                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"

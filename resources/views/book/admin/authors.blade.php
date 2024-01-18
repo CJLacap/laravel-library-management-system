@@ -6,7 +6,7 @@
 
     <div class="py-12">
         <div class="max-w-10xl mx-auto sm:px-6 lg:px-8">
-            <h3 class="text-white">Search Author</h3>
+            <h3 class="dark:text-white">Search Author</h3>
             <form method="get" action="" class="py-6">
                 @csrf
                 <label for="search"
@@ -27,10 +27,10 @@
                 </div>
             </form>
             @include('layouts.partials.message-status')
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800  overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="max-w-10xl overflow-x-auto relative">
-                        <table class="mx-auto  text-gray-500">
+                        <table class="mx-auto">
                             <thead class=" text-gray-300 uppercase bg-gray-700">
                                 <tr>
                                     <th scope="col" class="py-6 px-6">
@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($authors as $author)
-                                    <tr class="bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600 text-white text-center">
+                                <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white text-center capitalize">
                                         <td class="py-4 px-6 ">
                                             {{ $author->id }}
                                         </td>
@@ -75,7 +75,7 @@
                                             <x-dropdown align="right" width="48">
                                                 <x-slot name="trigger">
                                                     <button
-                                                        class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                        class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                                         type="button">
                                                         <svg class="w-5 h-5" aria-hidden="true"
                                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -89,7 +89,7 @@
                                                     <x-dropdown-link :href="route('author.edit', $author)">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
-                                                    
+
                                                         <form method="POST" action="{{ route('author.destroy', $author) }}">
                                                             @csrf
                                                             @method('delete')
@@ -99,7 +99,7 @@
                                                                 {{ __('Delete') }}
                                                             </x-dropdown-link>
                                                         </form>
-                                                   
+
                                                 </x-slot>
                                             </x-dropdown>
                                         </td>

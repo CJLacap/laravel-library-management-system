@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <div class="text-[2rem] leading-[3rem] tracking-tight font-bold text-black dark:text-white">
+                    <div class="text-[2rem] leading-[3rem] tracking-tight font-bold text-white">
                         <div class=" flex flex-wrap">
                             <a href="{{ route('home') }}">
                                  <img class="w-20 h-10" src="{{ asset('storage/logo.png') }}"/></a>

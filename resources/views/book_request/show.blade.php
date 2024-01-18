@@ -29,7 +29,7 @@
                                             <form method= "post" action="{{ route('request.status.update', $bookRequest) }}">
                                                 @csrf
                                                 @method('patch')
-                                                
+
                                                     <input type="hidden" name="status" value="approved">
                                                     <button
                                                         class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700">
@@ -57,10 +57,10 @@
                                         @endif
 
 
-                                        @if($bookRequest->status == 'denied' || $bookRequest->status == 'cancelled') 
+                                        @if($bookRequest->status == 'denied' || $bookRequest->status == 'cancelled')
                                         <div class="w-1/2 px-2">
                                         <button
-                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700" 
+                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-full font-bold hover:bg-sky-700"
                                         x-data=""
                                         x-on:click.prevent="$dispatch('open-modal', 'status-update-override-{{ $bookRequest->id }}')">
                                         {{ __('Approve') }}</button>
@@ -93,25 +93,25 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="md:flex-1 px-4">
-                                    <h2 class="text-2xl font-bold text-slate-300 mb-2">{{ $bookRequest->book->title }}
+                                <div class="md:flex-1 px-4 text-gray-900 dark:text-gray-300">
+                                    <h2 class="text-2xl font-bold dark:text-slate-300 mb-2">{{ $bookRequest->book->title }}
                                     </h2>
                                     <span class="font-bold text-gray-500">Author:</span>
-                                    <span class="text-gray-300 mb-4">{{ $bookRequest->book->author->name }}</span>
+                                    <span class=" mb-4">{{ $bookRequest->book->author->name }}</span>
                                     <div class="flex my-2">
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500">Copies:</span>
                                             <span
-                                                class="text-gray-300 capitalize">{{ $bookRequest->book->copies }}</span>
+                                                class=" capitalize">{{ $bookRequest->book->copies }}</span>
                                         </div>
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500 ">On Hand:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 {{ $bookRequest->book->copies - $bookRequest->book->borrowBooks->count() }}</span>
                                         </div>
                                         <div>
                                             <span class="font-bold text-gray-500 ">Book Availability:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 @if ($bookRequest->book->copies - $bookRequest->book->borrowBooks->count() == 0)
                                                     Borrowed
                                                 @else
@@ -124,48 +124,46 @@
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500">Publisher:</span>
                                             <span
-                                                class="text-gray-300 capitalize">{{ $bookRequest->book->publisher->name }}</span>
+                                                class=" capitalize">{{ $bookRequest->book->publisher->name }}</span>
                                         </div>
                                         <div class="mr-4">
                                             <span class="font-bold text-gray-500 ">Publisher Date:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class=" capitalize">
                                                 {{ $bookRequest->book->publication_year }}</span>
                                         </div>
                                         <div>
                                             <span class="font-bold text-gray-500 ">ISBN:</span>
-                                            <span class="text-gray-300 capitalize">{{ $bookRequest->book->isbn }}
+                                            <span class=" capitalize">{{ $bookRequest->book->isbn }}
                                             </span>
                                         </div>
                                     </div>
                                     <div class="my-5">
-                                        <p class="text-2xl font-bold text-slate-300">Request Information</p>
+                                        <p class="text-2xl font-bold dark:text-slate-300">Request Information</p>
                                         <div class="flex my-3">
                                             <div class="mr-3">
                                                 <span class="font-bold text-gray-500">Name:</span>
-                                                <span class="text-gray-300 capitalize">
+                                                <span class=" capitalize">
                                                     {{ $bookRequest->user->first_name }}
                                                     {{ $bookRequest->user->last_name }}
                                                 </span>
                                             </div>
                                             <div class="mr-3">
                                                 <span class="font-bold text-gray-500">Phone:</span>
-                                                <span class="text-gray-300">{{ $bookRequest->user->phone }}</span>
+                                                <span class="">{{ $bookRequest->user->phone }}</span>
                                             </div>
                                             <div class="mr-3">
                                                 <span class="font-bold text-gray-500">Email:</span>
-                                                <span class="text-gray-300 ">{{ $bookRequest->user->email }}</span>
+                                                <span class=" ">{{ $bookRequest->user->email }}</span>
                                             </div>
                                         </div>
                                         <div class="flex my-3">
-                                            <div class="mr-3">
+                                            <div class="mr-2">
                                                 <span class="font-bold text-gray-500">Created At: </span>
-                                                <span
-                                                    class="text-gray-300 capitalize">{{ $bookRequest->created_at->format('M-d-Y h:m a') }}</span>
+                                                <span>{{ $bookRequest->created_at->format('M-d-Y h:m A') }}</span>
                                             </div>
                                             <div>
                                                 <span class="font-bold text-gray-500">Updated At:</span>
-                                                <span
-                                                    class="text-gray-300">{{ $bookRequest->updated_at->format('M-d-Y h:m a') }}</span>
+                                                <span>{{ $bookRequest->updated_at->format('M-d-Y h:m A') }}</span>
                                             </div>
                                         </div>
                                         <div class="mr-3 mt-3">
@@ -183,20 +181,20 @@
                                     </div>
 
                                     <div class="my-5">
-                                        <p class="text-2xl font-bold text-slate-300">Librarian Information</p>
+                                        <p class="text-2xl font-bold dark:text-slate-300">Librarian Information</p>
                                         <div class="mr-3 mt-3">
                                             <span class="font-bold text-gray-500">Approved/Denied By:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class="capitalize">
                                                 @if($bookRequest->librarian_id != null)
                                                 {{ $bookRequest->librarian->first_name }}
                                                 {{ $bookRequest->librarian->last_name }}
-                                                
+
                                                 @endif
                                             </span>
                                         </div>
                                         <div class="mr-3 mt-3">
                                             <span class="font-bold text-gray-500">Remarks:</span>
-                                            <span class="text-gray-300 capitalize">
+                                            <span class="capitalize">
                                                 {{ $bookRequest->remarks }}
                                             </span>
                                             <form method="post" action="{{ route('request.status.update', $bookRequest) }}">
@@ -212,7 +210,7 @@
                                                     <x-input-error class="mt-2" :messages="$errors->get('remarks')" />
                                                 </div>
                                             </form>
-                
+
                                         </div>
 
                                     </div>

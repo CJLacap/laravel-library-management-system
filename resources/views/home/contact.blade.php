@@ -10,15 +10,15 @@
                     <form action="{{ route('home.contactUs.submit') }}" method="post">
                         @csrf
                         <div class="mb-4">
-                            <label for="name" class="block text-gray-200 text-sm font-bold mb-2">Name:</label>
+                            <label for="name" class="block dark:text-gray-200 text-sm font-bold mb-2">Name:</label>
                             <input type="text" id="name" name="name" class="w-full p-2 border border-gray-300 rounded">
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-200 text-sm font-bold mb-2">Email:</label>
+                            <label for="email" class="block dark:text-gray-200 text-sm font-bold mb-2">Email:</label>
                             <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded">
                         </div>
                         <div class="mb-4">
-                            <label for="message" class="block text-gray-200 text-sm font-bold mb-2">Message:</label>
+                            <label for="message" class="block dark:text-gray-200 text-sm font-bold mb-2">Message:</label>
                             <textarea id="message" name="message" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
                         </div>
                         <button type="submit" class="w-full bg-blue-500 text-white p-4 rounded-md">Submit</button>

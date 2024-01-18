@@ -28,7 +28,7 @@
                             class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                     </div>
                 </form>
-                
+
                 @include('layouts.partials.message-status')
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-4 text-gray-900 dark:text-gray-100">
@@ -62,7 +62,7 @@
                                         <p class="text-gray-700 text-md mb-2">Author: <span class="text-gray-700 font-bold">{{ $book->author->name }}</span> </p>
                                     </div>
                                 </div>
-                
+
                                 <!-- Button at the Same Position -->
                                 <div class="p-3 text-white flex flex-row justify-end">
                                     <a href="{{ route('user.showBook', $book) }}" class="rounded-full px-6 mx-3 py-3 bg-blue-600 hover:bg-blue-700 text-right">

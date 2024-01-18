@@ -14,8 +14,8 @@
             {{ __("Title: {$book->title}") }}
         </p>
         <div class="mt-6">
-            <x-input-label for="user" :value="__('User Email')" />
-            <x-text-input id="user" name="user" type="text" list="users" class="mt-1 block w-3/4" :value="old('user')"
+            <x-input-label for="user-{{ $book->id }}" :value="__('User Email')" />
+            <x-text-input id="user-{{ $book->id }}" name="user" type="text" list="users" class="mt-1 block w-3/4" :value="old('user')"
             placeholder="{{ __('Input/Select User Email') }}" autofocus autocomplete="user" />
             <datalist id="users">
                 @foreach ($users as $user )
@@ -26,14 +26,14 @@
         </div>
 
         <div class="mt-6">
-            <x-input-label for="return_date" :value="__('Return Date ')" />
-            <x-text-input id="return_date" name="return_date" type="date" class="mt-1 block w-3/4  dark:text-white dark:[color-scheme:dark]" required autofocus/>
+            <x-input-label for="return_date-{{ $book->id }}" :value="__('Return Date ')" />
+            <x-text-input id="return_date-{{ $book->id }}" name="return_date" type="date" class="mt-1 block w-3/4  dark:text-white dark:[color-scheme:dark]" required autofocus/>
             <x-input-error :messages="$errors->get('return_date')" class="mt-2" />
         </div>
-        
+
         <div class="mt-6">
-            <x-input-label for="remarks" value="{{ __('Remarks') }}"  />
-            <x-text-input id="remarks" name="remarks" type="text" class="mt-1 block w-3/4"
+            <x-input-label for="remarks-{{ $book->id }}" value="{{ __('Remarks') }}"  />
+            <x-text-input id="remarks-{{ $book->id }}" name="remarks" type="text" class="mt-1 block w-3/4"
                 placeholder="{{ __('Remarks (optional)') }}" />
             <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
         </div>
@@ -42,7 +42,7 @@
             <x-secondary-button x-on:click="$dispatch('close')">
                 {{ __('Cancel') }}
             </x-secondary-button>
-        
+
             <x-danger-button class="ml-3">
                     {{ __('Proceed') }}
             </x-danger-button>
@@ -82,7 +82,7 @@
             <x-text-input id="return_date" name="return_date" type="date" class="mt-1 block w-3/4  dark:text-white dark:[color-scheme:dark]"/>
             <x-input-error :messages="$errors->get('return_date')" class="mt-2" />
         </div>
-        
+
         <div class="mt-6">
             <x-input-label for="remarks" value="{{ __('Remarks') }}"  />
             <x-text-input id="remarks" name="remarks" type="text" class="mt-1 block w-3/4"
@@ -94,7 +94,7 @@
             <x-secondary-button x-on:click="$dispatch('close')">
                 {{ __('Cancel') }}
             </x-secondary-button>
-        
+
             <x-danger-button class="ml-3">
                     {{ __('Proceed') }}
             </x-danger-button>

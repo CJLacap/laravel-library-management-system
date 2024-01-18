@@ -21,7 +21,7 @@
                                         Requests</span>
                                     <div class="max-w-10xl overflow-x-auto relative mt-2 capitalize">
                                         <table class=" text-center mx-2">
-                                            <thead class="text-sm text-gray-300 uppercase">
+                                            <thead class="text-sm dark:text-gray-300 uppercase">
                                                 <tr>
                                                     <th class="px-4">
                                                         Pending
@@ -34,7 +34,7 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="text-white">
+                                            <tbody class="dark:text-white">
                                                 <tr>
                                                     <td>
                                                         {{ $bookRequests->where('status', 'pending')->count() }}
@@ -59,7 +59,7 @@
                                         Books</span>
                                     <div class="max-w-10xl overflow-x-auto relative mt-2 capitalize">
                                         <table class=" text-center mx-2">
-                                            <thead class="text-sm text-gray-300 uppercase">
+                                            <thead class="text-sm dark:text-gray-300 uppercase">
                                                 <tr>
                                                     <th class="px-4">
                                                         Borrowed
@@ -73,7 +73,7 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody class="text-white">
+                                            <tbody class="dark:text-white">
                                                 <tr>
                                                     <td>
                                                         {{ $borrowBooks->where('status', 'borrowed')->count() }}
@@ -104,7 +104,7 @@
                                         Requests (<span
                                             class="text-blue-400">{{ $bookRequests->where('status', '=', 'pending')->count() }}</span>)</span>
                                     <div class="max-w-10xl overflow-x-auto relative mt-2 capitalize mx-5">
-                                        <table class="mt-4 mx-auto text-gray-100  ">
+                                        <table class="mt-4 mx-auto">
                                             @if ($bookRequests->where('status', 'pending')->count() != 0)
                                                 <thead class="text-gray-300 uppercase bg-gray-700">
                                                     <tr>
@@ -124,9 +124,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($bookRequests->where('status', '=', 'pending')->take(10) as $bookRequest)
-                                                        <tr
-                                                            class="text-sm bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-
+                                                        <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600">
                                                             <td class="py-2 px-6">
                                                                 <a
                                                                     href="{{ route('user.showBook', $bookRequest->book->id) }}">
@@ -177,7 +175,7 @@
                                         Requests (<span
                                             class="text-blue-400">{{ $bookRequests->where('status', '=', 'approved')->count() }}</span>)</span>
                                     <div class="max-w-10xl overflow-x-auto relative mt-2 capitalize mx-5">
-                                        <table class="mt-4 mx-auto text-gray-100  ">
+                                        <table class="mt-4 mx-auto">
                                             @if ($bookRequests->where('status', 'approved')->count() != 0)
                                                 <thead class="text-gray-300 uppercase bg-gray-700">
                                                     <tr>
@@ -197,9 +195,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($bookRequests->where('status', '=', 'approved')->take(10) as $bookRequest)
-                                                        <tr
-                                                            class="text-sm bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-
+                                                        <tr class="dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600">
                                                             <td class="py-2 px-6">
                                                                 <a
                                                                     href="{{ route('user.showBook', $bookRequest->book->id) }}">
@@ -237,11 +233,11 @@
                                 class="scale-100 p-2  border-2 border-gray-500 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                                 <div class="overflow-hidden pt-3">
                                     <span class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                        Borrowed Books 
+                                        Borrowed Books
                                         (<span class="text-blue-400">{{ $borrowBooks->where('status', '=', 'borrowed')->count() }}</span>)
                                     </span>
                                     <div class="max-w-10xl overflow-x-auto relative mt-2 capitalize mx-5">
-                                        <table class="mt-4 mx-auto text-gray-100  ">
+                                        <table class="mt-4 mx-auto">
                                             @if ($borrowBooks->where('status', 'borrowed')->count() != 0)
                                                 <thead class="text-gray-300 uppercase bg-gray-700">
                                                     <tr>
@@ -261,9 +257,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($borrowBooks->where('status', '=', 'borrowed')->take(10) as $borrowBook)
-                                                        <tr
-                                                            class="text-sm bg-gray-800 border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-
+                                                        <tr class="text-sm dark:bg-gray-800 border-b hover:bg-gray-300 dark:hover:bg-gray-600">
                                                             <td class="py-2 px-6">
                                                                 <a href="{{ route('user.showBook', $borrowBook->book->id) }}">
                                                                     {{ substr($borrowBook->book->title, 0, 20) . '...' }}
