@@ -19,10 +19,10 @@ This Laravel package provides a comprehensive library management and reservation
 ## Features
 
 - **User Authentication:** Secure user authentication and authorization.
-- **Catalog Browsing:** Browse the library catalog with detailed book information.
+- **Books Browsing:** Browse the books with detailed book information.
 - **Reservation System:** Users can reserve books and manage their reservations.
 - **Borrowing History:** Keep track of users' borrowing history.
-- **Admin Panel:** Admins can manage books, users, reservations, and more.
+- **Admin Panel:** Admins can manage books, users, reservations, borrowed books and more.
 
 ## Installation
 
@@ -79,8 +79,9 @@ This Laravel package provides a comprehensive library management and reservation
   - Admins have additional privileges to manage books, users, and reservations.
 
 - **Endpoints:**
-  - `/Browse%20Books`: Browse the library catalog.
+  - `/Browse%20Books`: Browse books.
   - `/requests`: Manage book reservations.
+  - `/borrowed`: Manage borrowed books.
   - `/admin`: Access the admin panel.
 
 ## Contributing
